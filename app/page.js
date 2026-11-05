@@ -205,7 +205,7 @@ export default function Home() {
     <div className="min-h-screen bg-[#0a0a0f]">
       {/* Nav */}
       <nav className="sticky top-0 z-50 glass border-b border-white/5 px-4 py-3">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+        <div className="max-w-5xl mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <Sparkles className="w-6 h-6 text-gold" />
             <span className="text-xl font-bold">AIdea</span>
@@ -225,7 +225,7 @@ export default function Home() {
 
       {/* Filters */}
       <div className="sticky top-[57px] z-40 bg-[#0a0a0f]/95 backdrop-blur px-4 py-3 border-b border-white/5">
-        <div className="max-w-7xl mx-auto flex gap-2 overflow-x-auto">
+        <div className="max-w-5xl mx-auto flex gap-2 overflow-x-auto">
           {["All", "Video", "Art", "Show", "Newest", "Trending"].map((f) => (
             <button
               key={f}
@@ -237,12 +237,12 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-6 flex gap-6">
-        {/* Main Feed */}
-        <main className="flex-1">
+      {/* Constrained feed like YouTube */}
+      <div className="max-w-5xl mx-auto px-4 py-6">
+        <main>
           {/* First row of videos */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-8">
-            {VIDEOS.slice(0, 4).map((video) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+            {VIDEOS.slice(0, 3).map((video) => (
               <VideoCard
                 key={video.id}
                 video={video}
@@ -255,14 +255,14 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Shorts section — YouTube style break */}
+          {/* Shorts section */}
           <section className="mb-8">
-            <h2 className="text-lg font-semibold mb-3 flex items-center gap-2">
+            <h2 className="text-lg font-semibold mb-3">
               <span className="text-red-500">Shorts</span>
             </h2>
             <div className="flex gap-3 overflow-x-auto pb-2">
               {SHORTS.map((video) => (
-                <div key={video.id} className="flex-shrink-0 w-40">
+                <div key={video.id} className="flex-shrink-0 w-36">
                   <div
                     className="relative aspect-[9/16] rounded-xl overflow-hidden bg-cover bg-center cursor-pointer"
                     style={{ backgroundImage: `url(${video.thumb})` }}
@@ -273,7 +273,7 @@ export default function Home() {
                       <div className="text-[10px] text-muted">{video.creator}</div>
                     </div>
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <Play className="w-8 h-8 text-white fill-white opacity-80" />
+                      <Play className="w-7 h-7 text-white fill-white opacity-80" />
                     </div>
                   </div>
                 </div>
@@ -282,8 +282,8 @@ export default function Home() {
           </section>
 
           {/* Rest of videos */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {VIDEOS.slice(4).map((video) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {VIDEOS.slice(3).map((video) => (
               <VideoCard
                 key={video.id}
                 video={video}
@@ -296,31 +296,31 @@ export default function Home() {
             ))}
           </div>
         </main>
+      </div>
 
-        {/* Sticky Share Sidebar — always visible on desktop */}
-        <aside className="hidden lg:block w-56 flex-shrink-0">
-          <div className="sticky top-28 glass rounded-xl p-4">
-            <div className="text-sm font-medium mb-1">Share to</div>
-            <div className="text-xs text-muted mb-3 truncate">{selectedForShare.title}</div>
-            <div className="flex flex-col gap-2">
-              {OUTBOUND_SHARE.map((p) => (
-                <button
-                  key={p.name}
-                  onClick={() => quickShare(p)}
-                  className={`text-xs py-2 rounded-full text-white ${p.color}`}
-                >
-                  {p.name}
-                </button>
-              ))}
+      {/* Floating share panel — always visible, doesn't stretch the feed */}
+      <div className="hidden lg:block fixed right-4 top-32 z-40 w-48">
+        <div className="glass rounded-xl p-3">
+          <div className="text-xs font-medium mb-1">Share to</div>
+          <div className="text-[10px] text-muted mb-2 truncate">{selectedForShare.title}</div>
+          <div className="flex flex-col gap-1.5">
+            {OUTBOUND_SHARE.map((p) => (
               <button
-                onClick={() => copyLink(selectedForShare)}
-                className="text-xs py-2 rounded-full glass"
+                key={p.name}
+                onClick={() => quickShare(p)}
+                className={`text-[11px] py-1.5 rounded-full text-white ${p.color}`}
               >
-                {copied ? "Copied" : "Copy Link"}
+                {p.name}
               </button>
-            </div>
+            ))}
+            <button
+              onClick={() => copyLink(selectedForShare)}
+              className="text-[11px] py-1.5 rounded-full glass"
+            >
+              {copied ? "Copied" : "Copy Link"}
+            </button>
           </div>
-        </aside>
+        </div>
       </div>
 
       {/* Mobile sticky share bar */}
