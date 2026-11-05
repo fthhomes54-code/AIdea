@@ -113,9 +113,77 @@ const VIDEOS = [
   },
 ];
 
+const SHORTS = VIDEOS.slice(0, 6);
+
+function VideoCard({ video, onShare, openShare, onToggleShare, copied, onCopy }) {
+  return (
+    <div className="glass rounded-xl overflow-hidden">
+      <div
+        className="relative aspect-video bg-cover bg-center cursor-pointer group"
+        style={{ backgroundImage: `url(${video.thumb})` }}
+      >
+        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition" />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-black/50 backdrop-blur flex items-center justify-center group-hover:scale-105 transition">
+            <Play className="w-6 h-6 text-white fill-white" />
+          </div>
+        </div>
+        <span className="absolute bottom-2 right-2 text-xs bg-black/70 px-1.5 py-0.5 rounded">{video.time}</span>
+        <span className="absolute top-2 left-2 text-xs bg-blue/80 px-2 py-0.5 rounded-full">{video.tag}</span>
+      </div>
+
+      <div className="p-3">
+        <div className="flex gap-2 mb-2">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue to-gold flex items-center justify-center text-xs font-bold flex-shrink-0">
+            {video.creator.slice(0, 2)}
+          </div>
+          <div className="min-w-0">
+            <div className="font-medium text-sm truncate">{video.title}</div>
+            <div className="text-xs text-muted">{video.creator}</div>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between text-xs text-muted">
+          <div className="flex gap-3">
+            <span className="flex items-center gap-1"><Heart className="w-3.5 h-3.5" /> {video.likes}</span>
+            <span className="flex items-center gap-1"><MessageCircle className="w-3.5 h-3.5" /> {video.comments}</span>
+          </div>
+          <div className="flex gap-2">
+            <button onClick={() => onToggleShare(video.id)}>
+              <Share2 className="w-4 h-4" />
+            </button>
+            <Bookmark className="w-4 h-4" />
+          </div>
+        </div>
+
+        {openShare === video.id && (
+          <div className="mt-3 pt-2 border-t border-white/5 flex flex-wrap gap-1.5">
+            {OUTBOUND_SHARE.map((p) => (
+              <button
+                key={p.name}
+                onClick={() => onShare(p, video)}
+                className={`text-[10px] px-2 py-1 rounded-full text-white ${p.color}`}
+              >
+                {p.name}
+              </button>
+            ))}
+            <button
+              onClick={() => onCopy(video)}
+              className="text-[10px] px-2 py-1 rounded-full glass"
+            >
+              {copied ? "Copied" : "Copy"}
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const [openShare, setOpenShare] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [selectedForShare, setSelectedForShare] = useState(VIDEOS[0]);
 
   const share = (platform, video) => {
     const url = `https://aidea.app/v/${video.id}`;
@@ -127,6 +195,10 @@ export default function Home() {
     await navigator.clipboard.writeText(`https://aidea.app/v/${video.id}`);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const quickShare = (platform) => {
+    share(platform, selectedForShare);
   };
 
   return (
@@ -165,75 +237,108 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Video Grid — YouTube for AI creators */}
-      <main className="max-w-7xl mx-auto px-4 py-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {VIDEOS.map((video) => (
-            <div key={video.id} className="glass rounded-xl overflow-hidden">
-              <div
-                className="relative aspect-video bg-cover bg-center cursor-pointer group"
-                style={{ backgroundImage: `url(${video.thumb})` }}
-              >
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-14 h-14 rounded-full bg-black/50 backdrop-blur flex items-center justify-center group-hover:scale-105 transition">
-                    <Play className="w-7 h-7 text-white fill-white" />
+      <div className="max-w-7xl mx-auto px-4 py-6 flex gap-6">
+        {/* Main Feed */}
+        <main className="flex-1">
+          {/* First row of videos */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-8">
+            {VIDEOS.slice(0, 4).map((video) => (
+              <VideoCard
+                key={video.id}
+                video={video}
+                openShare={openShare}
+                onToggleShare={setOpenShare}
+                onShare={share}
+                copied={copied}
+                onCopy={copyLink}
+              />
+            ))}
+          </div>
+
+          {/* Shorts section — YouTube style break */}
+          <section className="mb-8">
+            <h2 className="text-lg font-semibold mb-3 flex items-center gap-2">
+              <span className="text-red-500">Shorts</span>
+            </h2>
+            <div className="flex gap-3 overflow-x-auto pb-2">
+              {SHORTS.map((video) => (
+                <div key={video.id} className="flex-shrink-0 w-40">
+                  <div
+                    className="relative aspect-[9/16] rounded-xl overflow-hidden bg-cover bg-center cursor-pointer"
+                    style={{ backgroundImage: `url(${video.thumb})` }}
+                  >
+                    <div className="absolute inset-0 bg-black/20" />
+                    <div className="absolute bottom-2 left-2 right-2">
+                      <div className="text-xs font-medium truncate">{video.title}</div>
+                      <div className="text-[10px] text-muted">{video.creator}</div>
+                    </div>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <Play className="w-8 h-8 text-white fill-white opacity-80" />
+                    </div>
                   </div>
                 </div>
-                <span className="absolute bottom-2 right-2 text-xs bg-black/70 px-1.5 py-0.5 rounded">{video.time}</span>
-                <span className="absolute top-2 left-2 text-xs bg-blue/80 px-2 py-0.5 rounded-full">{video.tag}</span>
-              </div>
-
-              <div className="p-3">
-                <div className="flex gap-2 mb-2">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue to-gold flex items-center justify-center text-xs font-bold flex-shrink-0">
-                    {video.creator.slice(0, 2)}
-                  </div>
-                  <div className="min-w-0">
-                    <div className="font-medium text-sm truncate">{video.title}</div>
-                    <div className="text-xs text-muted">{video.creator}</div>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between text-xs text-muted">
-                  <div className="flex gap-3">
-                    <span className="flex items-center gap-1"><Heart className="w-3.5 h-3.5" /> {video.likes}</span>
-                    <span className="flex items-center gap-1"><MessageCircle className="w-3.5 h-3.5" /> {video.comments}</span>
-                  </div>
-                  <div className="flex gap-2">
-                    <button onClick={() => setOpenShare(openShare === video.id ? null : video.id)}>
-                      <Share2 className="w-4 h-4" />
-                    </button>
-                    <Bookmark className="w-4 h-4" />
-                  </div>
-                </div>
-
-                {openShare === video.id && (
-                  <div className="mt-3 pt-2 border-t border-white/5 flex flex-wrap gap-1.5">
-                    {OUTBOUND_SHARE.map((p) => (
-                      <button
-                        key={p.name}
-                        onClick={() => share(p, video)}
-                        className={`text-[10px] px-2 py-1 rounded-full text-white ${p.color}`}
-                      >
-                        {p.name}
-                      </button>
-                    ))}
-                    <button
-                      onClick={() => copyLink(video)}
-                      className="text-[10px] px-2 py-1 rounded-full glass"
-                    >
-                      {copied ? "Copied" : "Copy"}
-                    </button>
-                  </div>
-                )}
-              </div>
+              ))}
             </div>
+          </section>
+
+          {/* Rest of videos */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {VIDEOS.slice(4).map((video) => (
+              <VideoCard
+                key={video.id}
+                video={video}
+                openShare={openShare}
+                onToggleShare={setOpenShare}
+                onShare={share}
+                copied={copied}
+                onCopy={copyLink}
+              />
+            ))}
+          </div>
+        </main>
+
+        {/* Sticky Share Sidebar — always visible on desktop */}
+        <aside className="hidden lg:block w-56 flex-shrink-0">
+          <div className="sticky top-28 glass rounded-xl p-4">
+            <div className="text-sm font-medium mb-1">Share to</div>
+            <div className="text-xs text-muted mb-3 truncate">{selectedForShare.title}</div>
+            <div className="flex flex-col gap-2">
+              {OUTBOUND_SHARE.map((p) => (
+                <button
+                  key={p.name}
+                  onClick={() => quickShare(p)}
+                  className={`text-xs py-2 rounded-full text-white ${p.color}`}
+                >
+                  {p.name}
+                </button>
+              ))}
+              <button
+                onClick={() => copyLink(selectedForShare)}
+                className="text-xs py-2 rounded-full glass"
+              >
+                {copied ? "Copied" : "Copy Link"}
+              </button>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      {/* Mobile sticky share bar */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 glass border-t border-white/5 p-3 z-50">
+        <div className="flex gap-2 overflow-x-auto">
+          {OUTBOUND_SHARE.map((p) => (
+            <button
+              key={p.name}
+              onClick={() => quickShare(p)}
+              className={`text-[10px] px-3 py-1.5 rounded-full text-white whitespace-nowrap ${p.color}`}
+            >
+              {p.name}
+            </button>
           ))}
         </div>
-      </main>
+      </div>
 
-      <footer className="border-t border-white/5 py-6 text-center text-xs text-muted">
+      <footer className="border-t border-white/5 py-6 text-center text-xs text-muted pb-16 lg:pb-6">
         AIdea — Place for AI creators.
       </footer>
     </div>
