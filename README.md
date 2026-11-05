@@ -4,14 +4,17 @@
 
 A social network for AI art, AI video, AI projects, and AI-hosted shows. Built with Next.js 15, Supabase, and Vercel.
 
+AIdea is the hub. Creators post here, then share their videos and art out to Facebook, Instagram, TikTok, YouTube, X, WhatsApp, Telegram, Reddit, and more in one click.
+
 ## Status
 
-Foundation scaffold. Landing page shows the target UI direction: video-first social feed.
+Foundation scaffold. Landing page shows the target UI direction: video-first social feed with outbound share.
 
 ## UI Direction
 
 - **Video-first**: Videos are the main focus. Large thumbnails with play buttons, duration badges, YouTube-style presentation.
 - **Facebook-style social interface**: Feed of cards with creator avatar, name, timestamp, caption, like / comment / share / save actions.
+- **Hub model**: Share buttons on every post let creators push content to major platforms (Facebook, Instagram, TikTok, YouTube, X, WhatsApp, Telegram, Reddit) plus copy link.
 - **Clean card structure** (similar to RentHub): Simple, readable cards. No clutter. Mobile-friendly.
 - Content-type filters: Art, Video, Show, Project.
 - Discovery: Newest, Trending, Following.
@@ -42,8 +45,8 @@ Foundation scaffold. Landing page shows the target UI direction: video-first soc
 - Optional style tags (Realistic, Anime, Cyberpunk, Fantasy, Abstract, Photorealistic) + freeform tags
 - Shows with seasons/episodes
 - Follow, like, comment, save
+- Outbound share to Facebook, Instagram, TikTok, YouTube, X, WhatsApp, Telegram, Reddit + copy link
 - Tag pages + full-text search
-- Social share buttons on landing page
 - NSFW opt-in toggle (default off); hard floor for minors/harm/hate/violence
 
 ## Content Policy
@@ -56,7 +59,7 @@ Foundation scaffold. Landing page shows the target UI direction: video-first soc
 
 - [ ] Connect Vercel project
 - [ ] Wire up upload pipeline + thumbnail generation
-- [ ] Build the actual feed + show pages with video-first cards
+- [ ] Build the actual feed + show pages with video-first cards and share menus
 - [ ] Soft launch
 
 ---
