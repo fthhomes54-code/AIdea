@@ -12,6 +12,10 @@ import {
   TrendingUp,
   Clock,
   Users,
+  Play,
+  Heart,
+  MessageCircle,
+  Bookmark,
 } from "lucide-react";
 
 const SHARE_LINKS = [
@@ -85,10 +89,10 @@ export default function LandingPage() {
             <span className="text-xl font-bold tracking-tight">AIdea</span>
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm text-muted">
+            <a href="#feed" className="hover:text-blue transition-colors">Feed</a>
             <a href="#art" className="hover:text-blue transition-colors">Art</a>
             <a href="#video" className="hover:text-blue transition-colors">Video</a>
             <a href="#shows" className="hover:text-blue transition-colors">Shows</a>
-            <a href="#share" className="hover:text-blue transition-colors">Share</a>
           </div>
           <button className="bg-blue hover:bg-blue-600 text-white px-5 py-2 rounded-full text-sm font-medium transition-colors">
             Sign Up Free
@@ -111,8 +115,8 @@ export default function LandingPage() {
             </span>
           </h1>
           <p className="text-xl text-muted max-w-2xl mx-auto mb-10">
-            AIdea is the social network built for AI creators. Upload, showcase,
-            and grow an audience — on your terms.
+            AIdea is the social network built for AI creators. Video-first feed.
+            Upload, showcase, and grow an audience — on your terms.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button className="bg-blue hover:bg-blue-600 text-white px-8 py-4 rounded-full text-lg font-medium transition-colors flex items-center justify-center gap-2">
@@ -122,6 +126,66 @@ export default function LandingPage() {
               Explore the Feed
             </button>
           </div>
+        </div>
+      </section>
+
+      {/* Sample Video-First Feed Preview */}
+      <section id="feed" className="py-20 px-6">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-4">Video-First Social Feed</h2>
+          <p className="text-muted text-center mb-10">
+            YouTube-style video cards inside a Facebook-style social feed.
+          </p>
+
+          {/* Sample post card */}
+          <div className="glass rounded-2xl overflow-hidden mb-6">
+            {/* Header */}
+            <div className="flex items-center gap-3 p-4">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue to-gold flex items-center justify-center text-sm font-bold">
+                AI
+              </div>
+              <div>
+                <div className="font-medium">AI Creator</div>
+                <div className="text-xs text-muted">2 hours ago · Video</div>
+              </div>
+            </div>
+
+            {/* Caption */}
+            <div className="px-4 pb-3 text-sm">
+              New AI-generated short. Full creator control, no penalties.
+            </div>
+
+            {/* Video thumbnail with play */}
+            <div className="relative bg-black aspect-video flex items-center justify-center cursor-pointer group">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue/20 to-gold/20" />
+              <div className="relative z-10 w-16 h-16 rounded-full bg-white/20 backdrop-blur flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Play className="w-8 h-8 text-white fill-white" />
+              </div>
+              <div className="absolute bottom-3 right-3 text-xs bg-black/70 px-2 py-1 rounded">1:24</div>
+            </div>
+
+            {/* Actions */}
+            <div className="flex items-center justify-between px-4 py-3 border-t border-white/5">
+              <div className="flex items-center gap-6 text-sm text-muted">
+                <button className="flex items-center gap-1 hover:text-white transition-colors">
+                  <Heart className="w-5 h-5" /> 124
+                </button>
+                <button className="flex items-center gap-1 hover:text-white transition-colors">
+                  <MessageCircle className="w-5 h-5" /> 18
+                </button>
+                <button className="flex items-center gap-1 hover:text-white transition-colors">
+                  <Share2 className="w-5 h-5" /> Share
+                </button>
+              </div>
+              <button className="text-muted hover:text-white transition-colors">
+                <Bookmark className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+
+          <p className="text-center text-sm text-muted">
+            Clean cards like RentHub. Video is the main focus. Social actions stay familiar.
+          </p>
         </div>
       </section>
 
@@ -143,7 +207,7 @@ export default function LandingPage() {
             </div>
             <h3 className="text-2xl font-bold mb-3">Daily Video Feed</h3>
             <p className="text-muted">
-              Post AI videos every day. Thumbnails, captions, tags — full creator control.
+              Post AI videos every day. Big thumbnails, play buttons, full creator control.
             </p>
           </div>
           <div className="glass card-hover rounded-2xl p-8">
