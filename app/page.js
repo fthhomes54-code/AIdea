@@ -124,52 +124,52 @@ function VideoCard({ video, onShare, openShare, onToggleShare, copied, onCopy })
       >
         <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition" />
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-12 h-12 rounded-full bg-black/50 backdrop-blur flex items-center justify-center group-hover:scale-105 transition">
-            <Play className="w-6 h-6 text-white fill-white" />
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/50 backdrop-blur flex items-center justify-center group-hover:scale-105 transition">
+            <Play className="w-5 h-5 sm:w-6 sm:h-6 text-white fill-white" />
           </div>
         </div>
-        <span className="absolute bottom-2 right-2 text-xs bg-black/70 px-1.5 py-0.5 rounded">{video.time}</span>
-        <span className="absolute top-2 left-2 text-xs bg-blue/80 px-2 py-0.5 rounded-full">{video.tag}</span>
+        <span className="absolute bottom-1.5 right-1.5 text-[10px] sm:text-xs bg-black/70 px-1.5 py-0.5 rounded">{video.time}</span>
+        <span className="absolute top-1.5 left-1.5 text-[10px] sm:text-xs bg-blue/80 px-1.5 py-0.5 rounded-full">{video.tag}</span>
       </div>
 
-      <div className="p-3">
-        <div className="flex gap-2 mb-2">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue to-gold flex items-center justify-center text-xs font-bold flex-shrink-0">
+      <div className="p-2 sm:p-3">
+        <div className="flex gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
+          <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-blue to-gold flex items-center justify-center text-[10px] sm:text-xs font-bold flex-shrink-0">
             {video.creator.slice(0, 2)}
           </div>
           <div className="min-w-0">
-            <div className="font-medium text-sm truncate">{video.title}</div>
-            <div className="text-xs text-muted">{video.creator}</div>
+            <div className="font-medium text-xs sm:text-sm truncate">{video.title}</div>
+            <div className="text-[10px] sm:text-xs text-muted">{video.creator}</div>
           </div>
         </div>
 
-        <div className="flex items-center justify-between text-xs text-muted">
-          <div className="flex gap-3">
-            <span className="flex items-center gap-1"><Heart className="w-3.5 h-3.5" /> {video.likes}</span>
-            <span className="flex items-center gap-1"><MessageCircle className="w-3.5 h-3.5" /> {video.comments}</span>
+        <div className="flex items-center justify-between text-[10px] sm:text-xs text-muted">
+          <div className="flex gap-2 sm:gap-3">
+            <span className="flex items-center gap-0.5"><Heart className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> {video.likes}</span>
+            <span className="flex items-center gap-0.5"><MessageCircle className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> {video.comments}</span>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-1.5 sm:gap-2">
             <button onClick={() => onToggleShare(video.id)}>
-              <Share2 className="w-4 h-4" />
+              <Share2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </button>
-            <Bookmark className="w-4 h-4" />
+            <Bookmark className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           </div>
         </div>
 
         {openShare === video.id && (
-          <div className="mt-3 pt-2 border-t border-white/5 flex flex-wrap gap-1.5">
+          <div className="mt-2 pt-2 border-t border-white/5 flex flex-wrap gap-1">
             {OUTBOUND_SHARE.map((p) => (
               <button
                 key={p.name}
                 onClick={() => onShare(p, video)}
-                className={`text-[10px] px-2 py-1 rounded-full text-white ${p.color}`}
+                className={`text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-full text-white ${p.color}`}
               >
                 {p.name}
               </button>
             ))}
             <button
               onClick={() => onCopy(video)}
-              className="text-[10px] px-2 py-1 rounded-full glass"
+              className="text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-full glass"
             >
               {copied ? "Copied" : "Copy"}
             </button>
@@ -238,11 +238,11 @@ export default function Home() {
       </div>
 
       {/* Constrained feed like YouTube */}
-      <div className="max-w-5xl mx-auto px-4 py-6">
+      <div className="max-w-5xl mx-auto px-3 sm:px-4 py-4 sm:py-6">
         <main>
-          {/* First row of videos */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-            {VIDEOS.slice(0, 3).map((video) => (
+          {/* Videos — 2 columns on mobile so more than one is visible */}
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 mb-6 sm:mb-8">
+            {VIDEOS.slice(0, 6).map((video) => (
               <VideoCard
                 key={video.id}
                 video={video}
@@ -256,24 +256,24 @@ export default function Home() {
           </div>
 
           {/* Shorts section */}
-          <section className="mb-8">
-            <h2 className="text-lg font-semibold mb-3">
+          <section className="mb-6 sm:mb-8">
+            <h2 className="text-base sm:text-lg font-semibold mb-2 sm:mb-3">
               <span className="text-red-500">Shorts</span>
             </h2>
-            <div className="flex gap-3 overflow-x-auto pb-2">
+            <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2">
               {SHORTS.map((video) => (
-                <div key={video.id} className="flex-shrink-0 w-36">
+                <div key={video.id} className="flex-shrink-0 w-28 sm:w-36">
                   <div
                     className="relative aspect-[9/16] rounded-xl overflow-hidden bg-cover bg-center cursor-pointer"
                     style={{ backgroundImage: `url(${video.thumb})` }}
                   >
                     <div className="absolute inset-0 bg-black/20" />
-                    <div className="absolute bottom-2 left-2 right-2">
-                      <div className="text-xs font-medium truncate">{video.title}</div>
-                      <div className="text-[10px] text-muted">{video.creator}</div>
+                    <div className="absolute bottom-1.5 left-1.5 right-1.5">
+                      <div className="text-[10px] sm:text-xs font-medium truncate">{video.title}</div>
+                      <div className="text-[9px] sm:text-[10px] text-muted">{video.creator}</div>
                     </div>
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <Play className="w-7 h-7 text-white fill-white opacity-80" />
+                      <Play className="w-6 h-6 sm:w-7 sm:h-7 text-white fill-white opacity-80" />
                     </div>
                   </div>
                 </div>
@@ -282,8 +282,8 @@ export default function Home() {
           </section>
 
           {/* Rest of videos */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {VIDEOS.slice(3).map((video) => (
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4">
+            {VIDEOS.slice(6).map((video) => (
               <VideoCard
                 key={video.id}
                 video={video}
