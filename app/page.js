@@ -8,7 +8,10 @@ import {
   Tv,
   Share2,
   Sparkles,
-  ArrowRight,
+  Folder,
+  TrendingUp,
+  Clock,
+  Users,
 } from "lucide-react";
 
 const SHARE_LINKS = [
@@ -42,6 +45,19 @@ const SHARE_LINKS = [
     url: (u, t) =>
       `https://t.me/share/url?url=${encodeURIComponent(u)}&text=${encodeURIComponent(t)}`,
   },
+];
+
+const CONTENT_TYPES = [
+  { name: "Art", icon: ImageIcon },
+  { name: "Video", icon: Video },
+  { name: "Show", icon: Tv },
+  { name: "Project", icon: Folder },
+];
+
+const DISCOVERY = [
+  { name: "Newest", icon: Clock },
+  { name: "Trending", icon: TrendingUp },
+  { name: "Following", icon: Users },
 ];
 
 export default function LandingPage() {
@@ -118,8 +134,7 @@ export default function LandingPage() {
             </div>
             <h3 className="text-2xl font-bold mb-3">AI Art Gallery</h3>
             <p className="text-muted">
-              Upload images, tag them, pick a mood. Cyberpunk, anime, surreal —
-              your style, your rules.
+              Upload images, add tags, and showcase your style. Realistic, anime, cyberpunk — your art, your rules.
             </p>
           </div>
           <div className="glass card-hover rounded-2xl p-8">
@@ -128,8 +143,7 @@ export default function LandingPage() {
             </div>
             <h3 className="text-2xl font-bold mb-3">Daily Video Feed</h3>
             <p className="text-muted">
-              Post AI videos every day like YouTube. Thumbnails, captions,
-              tags — full creator control.
+              Post AI videos every day. Thumbnails, captions, tags — full creator control.
             </p>
           </div>
           <div className="glass card-hover rounded-2xl p-8">
@@ -138,14 +152,53 @@ export default function LandingPage() {
             </div>
             <h3 className="text-2xl font-bold mb-3">Launch Your Show</h3>
             <p className="text-muted">
-              Build episodic AI shows with seasons and episodes. A real channel
-              for AI storytelling.
+              Build episodic AI shows with seasons and episodes. A real channel for AI storytelling.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Social Share Section — FIRST PAGE, IMMEDIATE VISIBILITY */}
+      {/* Filters Preview */}
+      <section className="py-20 px-6">
+        <div className="max-w-5xl mx-auto text-center">
+          <h2 className="text-4xl font-bold mb-4">Browse by Type</h2>
+          <p className="text-muted mb-10">
+            Find exactly what you want. Art, video, shows, or projects.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4 mb-12">
+            {CONTENT_TYPES.map((type) => {
+              const Icon = type.icon;
+              return (
+                <div
+                  key={type.name}
+                  className="glass rounded-full px-6 py-3 text-sm font-medium flex items-center gap-2 hover:border-blue transition-colors cursor-pointer"
+                >
+                  <Icon className="w-4 h-4" />
+                  {type.name}
+                </div>
+              );
+            })}
+          </div>
+
+          <h3 className="text-2xl font-bold mb-6">Discovery</h3>
+          <div className="flex flex-wrap justify-center gap-4">
+            {DISCOVERY.map((item) => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={item.name}
+                  className="glass rounded-full px-6 py-3 text-sm font-medium flex items-center gap-2 hover:border-gold transition-colors cursor-pointer"
+                >
+                  <Icon className="w-4 h-4" />
+                  {item.name}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Social Share Section */}
       <section id="share" className="py-20 px-6 bg-gradient-to-b from-base to-card">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl font-bold mb-4">Spread the Word</h2>
@@ -170,32 +223,6 @@ export default function LandingPage() {
           >
             {copied ? "✓ Copied!" : "Copy Link: aidea.app"}
           </button>
-        </div>
-      </section>
-
-      {/* Mood Filters Preview */}
-      <section className="py-20 px-6">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-4">Mood Filters</h2>
-          <p className="text-muted text-center mb-10">
-            Borrowed from StyleGenius DNA. Dangerous. Chill. Cocky. Sleek. Raw.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            {[
-              "Dangerous",
-              "Chill",
-              "Cocky",
-              "Sleek",
-              "Raw",
-            ].map((mood) => (
-              <div
-                key={mood}
-                className={`mood-${mood.toLowerCase()} rounded-full px-6 py-3 text-sm font-medium`}
-              >
-                {mood}
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
