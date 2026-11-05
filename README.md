@@ -2,11 +2,11 @@
 
 **Where AI Creation Is the Feature, Not the Liability.**
 
-A social network for AI art, AI video, and AI-hosted shows. Built with Next.js 15, Supabase, and Vercel. Dark base, electric blue, gold — StyleGenius DNA.
+A social network for AI art, AI video, AI projects, and AI-hosted shows. Built with Next.js 15, Supabase, and Vercel.
 
 ## Status
 
-Foundation scaffold is live. Landing page with social share buttons (Facebook, X, Reddit, WhatsApp, Telegram) is on the first page for immediate visibility.
+Foundation scaffold. Landing page with content-type filters, discovery options, and social share buttons.
 
 ## Stack
 
@@ -28,17 +28,19 @@ Foundation scaffold is live. Landing page with social share buttons (Facebook, X
 - Profiles with avatar, banner, bio, social links
 - Art uploads (jpg, png, webp, gif) + video uploads (mp4, webm, 500MB max)
 - Global feed + For You ranked feed
-- Mood filters: Dangerous, Chill, Cocky, Sleek, Raw
+- Content-type filters: Art, Video, Show, Project
+- Discovery: Newest, Trending, Following
+- Optional style tags (Realistic, Anime, Cyberpunk, Fantasy, Abstract, Photorealistic) + freeform tags
 - Shows with seasons/episodes
 - Follow, like, comment, save
-- Tag pages + trending + full-text search
+- Tag pages + full-text search
 - Social share buttons on landing page
 - NSFW opt-in toggle (default off); hard floor for minors/harm/hate/violence
 
 ## Content Policy
 
 - Adult/rated-R content allowed with self-tagging. Not a porn site.
-- Profanity allowed. Hate speech, threats, demonic incitement, and content involving minors banned instantly.
+- Profanity allowed. Hate speech, threats, and content involving minors banned instantly.
 - See PRD section 13 for full policy.
 
 ## Next Steps
@@ -46,7 +48,7 @@ Foundation scaffold is live. Landing page with social share buttons (Facebook, X
 - [ ] Connect Vercel project
 - [ ] Wire up upload pipeline + thumbnail generation
 - [ ] Build feed + show pages
-- [ ] Soft launch to StyleGenius/RentHub audience
+- [ ] Soft launch
 
 ---
 
