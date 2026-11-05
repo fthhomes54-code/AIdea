@@ -17,12 +17,11 @@ create table if not exists profiles (
 create table if not exists posts (
   id uuid default gen_random_uuid() primary key,
   author_id uuid references profiles(id) on delete cascade not null,
-  media_type text not null check (media_type in ('art', 'video')),
+  media_type text not null check (media_type in ('art', 'video', 'project')),
   media_url text not null,
   thumbnail_url text,
   caption text,
   tags text[] default array[]::text[],
-  mood text check (mood in ('Dangerous', 'Chill', 'Cocky', 'Sleek', 'Raw')),
   nsfw boolean default false,
   likes_count int default 0,
   comments_count int default 0,
@@ -100,7 +99,6 @@ alter table posts add column if not exists search_vector tsvector
 create index if not exists posts_search_idx on posts using gin(search_vector);
 create index if not exists posts_created_idx on posts (created_at desc);
 create index if not exists posts_author_idx on posts (author_id);
-create index if not exists posts_mood_idx on posts (mood);
 create index if not exists posts_nsfw_idx on posts (nsfw) where nsfw = false;
 
 -- RLS policies (basic)
