@@ -16,39 +16,18 @@ import {
   Heart,
   MessageCircle,
   Bookmark,
+  Link as LinkIcon,
 } from "lucide-react";
 
-const SHARE_LINKS = [
-  {
-    name: "Facebook",
-    color: "bg-blue-600 hover:bg-blue-500",
-    url: (u) =>
-      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(u)}`,
-  },
-  {
-    name: "X",
-    color: "bg-black hover:bg-gray-800 border border-gray-700",
-    url: (u, t) =>
-      `https://twitter.com/intent/tweet?url=${encodeURIComponent(u)}&text=${encodeURIComponent(t)}`,
-  },
-  {
-    name: "Reddit",
-    color: "bg-orange-600 hover:bg-orange-500",
-    url: (u, t) =>
-      `https://www.reddit.com/submit?url=${encodeURIComponent(u)}&title=${encodeURIComponent(t)}`,
-  },
-  {
-    name: "WhatsApp",
-    color: "bg-green-600 hover:bg-green-500",
-    url: (u, t) =>
-      `https://wa.me/?text=${encodeURIComponent(t + " " + u)}`,
-  },
-  {
-    name: "Telegram",
-    color: "bg-sky-600 hover:bg-sky-500",
-    url: (u, t) =>
-      `https://t.me/share/url?url=${encodeURIComponent(u)}&text=${encodeURIComponent(t)}`,
-  },
+const OUTBOUND_SHARE = [
+  { name: "Facebook", color: "bg-blue-600 hover:bg-blue-500", url: (u, t) => `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(u)}` },
+  { name: "Instagram", color: "bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 hover:opacity-90", url: (u) => `https://www.instagram.com/` }, // Instagram has limited web share; opens app/site
+  { name: "TikTok", color: "bg-black hover:bg-gray-800 border border-gray-700", url: (u) => `https://www.tiktok.com/` },
+  { name: "YouTube", color: "bg-red-600 hover:bg-red-500", url: (u) => `https://www.youtube.com/` },
+  { name: "X", color: "bg-black hover:bg-gray-800 border border-gray-700", url: (u, t) => `https://twitter.com/intent/tweet?url=${encodeURIComponent(u)}&text=${encodeURIComponent(t)}` },
+  { name: "WhatsApp", color: "bg-green-600 hover:bg-green-500", url: (u, t) => `https://wa.me/?text=${encodeURIComponent(t + " " + u)}` },
+  { name: "Telegram", color: "bg-sky-600 hover:bg-sky-500", url: (u, t) => `https://t.me/share/url?url=${encodeURIComponent(u)}&text=${encodeURIComponent(t)}` },
+  { name: "Reddit", color: "bg-orange-600 hover:bg-orange-500", url: (u, t) => `https://www.reddit.com/submit?url=${encodeURIComponent(u)}&title=${encodeURIComponent(t)}` },
 ];
 
 const CONTENT_TYPES = [
@@ -66,15 +45,17 @@ const DISCOVERY = [
 
 export default function LandingPage() {
   const [copied, setCopied] = useState(false);
+  const [showShare, setShowShare] = useState(false);
   const siteUrl = "https://aidea.app";
-  const siteTitle = "AIdea — Where AI Creation Is the Feature";
+  const samplePostUrl = "https://aidea.app/post/sample-video";
+  const sampleTitle = "Check out my new AI video on AIdea";
 
-  const handleShare = (link) => {
-    window.open(link.url(siteUrl, siteTitle), "_blank", "width=600,height=400");
+  const handleOutboundShare = (link) => {
+    window.open(link.url(samplePostUrl, sampleTitle), "_blank", "width=600,height=400");
   };
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(siteUrl);
+    await navigator.clipboard.writeText(samplePostUrl);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -90,9 +71,9 @@ export default function LandingPage() {
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm text-muted">
             <a href="#feed" className="hover:text-blue transition-colors">Feed</a>
+            <a href="#share" className="hover:text-blue transition-colors">Share</a>
             <a href="#art" className="hover:text-blue transition-colors">Art</a>
             <a href="#video" className="hover:text-blue transition-colors">Video</a>
-            <a href="#shows" className="hover:text-blue transition-colors">Shows</a>
           </div>
           <button className="bg-blue hover:bg-blue-600 text-white px-5 py-2 rounded-full text-sm font-medium transition-colors">
             Sign Up Free
@@ -115,8 +96,7 @@ export default function LandingPage() {
             </span>
           </h1>
           <p className="text-xl text-muted max-w-2xl mx-auto mb-10">
-            AIdea is the social network built for AI creators. Video-first feed.
-            Upload, showcase, and grow an audience — on your terms.
+            AIdea is the hub for AI creators. Post here, then share your videos and art to Facebook, Instagram, TikTok, YouTube, and everywhere else.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button className="bg-blue hover:bg-blue-600 text-white px-8 py-4 rounded-full text-lg font-medium transition-colors flex items-center justify-center gap-2">
@@ -134,12 +114,11 @@ export default function LandingPage() {
         <div className="max-w-3xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-4">Video-First Social Feed</h2>
           <p className="text-muted text-center mb-10">
-            YouTube-style video cards inside a Facebook-style social feed.
+            YouTube-style video cards. Facebook-style social actions. Share out to every platform.
           </p>
 
           {/* Sample post card */}
           <div className="glass rounded-2xl overflow-hidden mb-6">
-            {/* Header */}
             <div className="flex items-center gap-3 p-4">
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue to-gold flex items-center justify-center text-sm font-bold">
                 AI
@@ -150,12 +129,10 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* Caption */}
             <div className="px-4 pb-3 text-sm">
               New AI-generated short. Full creator control, no penalties.
             </div>
 
-            {/* Video thumbnail with play */}
             <div className="relative bg-black aspect-video flex items-center justify-center cursor-pointer group">
               <div className="absolute inset-0 bg-gradient-to-br from-blue/20 to-gold/20" />
               <div className="relative z-10 w-16 h-16 rounded-full bg-white/20 backdrop-blur flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -164,7 +141,6 @@ export default function LandingPage() {
               <div className="absolute bottom-3 right-3 text-xs bg-black/70 px-2 py-1 rounded">1:24</div>
             </div>
 
-            {/* Actions */}
             <div className="flex items-center justify-between px-4 py-3 border-t border-white/5">
               <div className="flex items-center gap-6 text-sm text-muted">
                 <button className="flex items-center gap-1 hover:text-white transition-colors">
@@ -173,7 +149,10 @@ export default function LandingPage() {
                 <button className="flex items-center gap-1 hover:text-white transition-colors">
                   <MessageCircle className="w-5 h-5" /> 18
                 </button>
-                <button className="flex items-center gap-1 hover:text-white transition-colors">
+                <button
+                  onClick={() => setShowShare(!showShare)}
+                  className="flex items-center gap-1 hover:text-white transition-colors"
+                >
                   <Share2 className="w-5 h-5" /> Share
                 </button>
               </div>
@@ -181,11 +160,64 @@ export default function LandingPage() {
                 <Bookmark className="w-5 h-5" />
               </button>
             </div>
+
+            {/* Inline share menu for this post */}
+            {showShare && (
+              <div className="px-4 pb-4 border-t border-white/5 pt-3">
+                <p className="text-xs text-muted mb-3">Share this video to:</p>
+                <div className="flex flex-wrap gap-2">
+                  {OUTBOUND_SHARE.map((link) => (
+                    <button
+                      key={link.name}
+                      onClick={() => handleOutboundShare(link)}
+                      className={`share-btn text-white text-xs ${link.color}`}
+                    >
+                      {link.name}
+                    </button>
+                  ))}
+                  <button
+                    onClick={handleCopy}
+                    className="share-btn glass text-xs"
+                  >
+                    <LinkIcon className="w-3 h-3" />
+                    {copied ? "Copied" : "Copy Link"}
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
           <p className="text-center text-sm text-muted">
-            Clean cards like RentHub. Video is the main focus. Social actions stay familiar.
+            Post on AIdea. Share anywhere. The hub that connects creators to every platform.
           </p>
+        </div>
+      </section>
+
+      {/* Outbound Share Hub Section */}
+      <section id="share" className="py-20 px-6 bg-gradient-to-b from-base to-card">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl font-bold mb-4">Share Your Creations Everywhere</h2>
+          <p className="text-muted mb-10">
+            AIdea is the hub. Post once, then push your videos and art to Facebook, Instagram, TikTok, YouTube, X, WhatsApp, and more in one click.
+          </p>
+          <div className="flex flex-wrap justify-center gap-3 mb-8">
+            {OUTBOUND_SHARE.map((link) => (
+              <button
+                key={link.name}
+                onClick={() => handleOutboundShare(link)}
+                className={`share-btn text-white ${link.color}`}
+              >
+                <Share2 className="w-4 h-4" />
+                {link.name}
+              </button>
+            ))}
+          </div>
+          <button
+            onClick={handleCopy}
+            className="glass rounded-full px-6 py-3 text-sm hover:border-gold transition-colors"
+          >
+            {copied ? "✓ Copied!" : "Copy Post Link"}
+          </button>
         </div>
       </section>
 
@@ -259,34 +291,6 @@ export default function LandingPage() {
               );
             })}
           </div>
-        </div>
-      </section>
-
-      {/* Social Share Section */}
-      <section id="share" className="py-20 px-6 bg-gradient-to-b from-base to-card">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-4">Spread the Word</h2>
-          <p className="text-muted mb-10">
-            Share AIdea instantly across every major platform. One click.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4 mb-8">
-            {SHARE_LINKS.map((link) => (
-              <button
-                key={link.name}
-                onClick={() => handleShare(link)}
-                className={`share-btn text-white ${link.color}`}
-              >
-                <Share2 className="w-4 h-4" />
-                {link.name}
-              </button>
-            ))}
-          </div>
-          <button
-            onClick={handleCopy}
-            className="glass rounded-full px-6 py-3 text-sm hover:border-gold transition-colors"
-          >
-            {copied ? "✓ Copied!" : "Copy Link: aidea.app"}
-          </button>
         </div>
       </section>
 
