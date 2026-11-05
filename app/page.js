@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import {
-  Upload,
   Sparkles,
   Play,
   Heart,
@@ -10,7 +9,6 @@ import {
   Share2,
   Bookmark,
   Search,
-  Link as LinkIcon,
 } from "lucide-react";
 
 const OUTBOUND_SHARE = [
@@ -66,13 +64,13 @@ export default function Home() {
               className="w-full bg-white/5 border border-white/10 rounded-full pl-10 pr-4 py-2 text-sm focus:outline-none focus:border-blue"
             />
           </div>
-          <button className="bg-blue hover:bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2">
-            <Upload className="w-4 h-4" /> Upload
+          <button className="bg-blue hover:bg-blue-600 text-white px-5 py-2 rounded-full text-sm font-medium">
+            Sign Up
           </button>
         </div>
       </nav>
 
-      {/* Simple filters */}
+      {/* Filters */}
       <div className="sticky top-[57px] z-40 bg-[#0a0a0f]/95 backdrop-blur px-4 py-3 border-b border-white/5">
         <div className="max-w-7xl mx-auto flex gap-2 overflow-x-auto">
           {["All", "Video", "Art", "Show", "Newest", "Trending"].map((f) => (
@@ -86,7 +84,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Video Grid */}
+      {/* Video Grid — YouTube for AI creators */}
       <main className="max-w-7xl mx-auto px-4 py-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {VIDEOS.map((video) => (
@@ -151,7 +149,7 @@ export default function Home() {
       </main>
 
       <footer className="border-t border-white/5 py-6 text-center text-xs text-muted">
-        AIdea — AI creation is the feature, not the liability.
+        AIdea — Place for AI creators.
       </footer>
     </div>
   );
