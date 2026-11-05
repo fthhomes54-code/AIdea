@@ -21,15 +21,96 @@ const OUTBOUND_SHARE = [
 ];
 
 const VIDEOS = [
-  { id: 1, title: "Neon City Chase", creator: "CyberAI", time: "1:42", likes: "842", comments: "56", tag: "Cyberpunk" },
-  { id: 2, title: "Anime Battle Sequence", creator: "AnimeForge", time: "0:58", likes: "1.2k", comments: "89", tag: "Anime" },
-  { id: 3, title: "Photorealistic Portrait", creator: "RealVision", time: "0:34", likes: "567", comments: "23", tag: "Realistic" },
-  { id: 4, title: "Fantasy Dragon Flight", creator: "MythMaker", time: "2:15", likes: "1.8k", comments: "142", tag: "Fantasy" },
-  { id: 5, title: "Abstract Light Waves", creator: "AbstractLab", time: "1:08", likes: "321", comments: "17", tag: "Abstract" },
-  { id: 6, title: "Cyberpunk Rain Alley", creator: "NeonDream", time: "1:55", likes: "976", comments: "64", tag: "Cyberpunk" },
-  { id: 7, title: "AI Music Visualizer", creator: "SoundAI", time: "3:22", likes: "2.1k", comments: "201", tag: "Abstract" },
-  { id: 8, title: "Epic Landscape Timelapse", creator: "WorldGen", time: "1:17", likes: "734", comments: "45", tag: "Realistic" },
-  { id: 9, title: "Mecha Showdown", creator: "MechaAI", time: "2:40", likes: "1.4k", comments: "98", tag: "Anime" },
+  {
+    id: 1,
+    title: "Neon City Chase",
+    creator: "CyberAI",
+    time: "1:42",
+    likes: "842",
+    comments: "56",
+    tag: "Cyberpunk",
+    thumb: "https://videocdn.cdnpk.net/videos/21142582-bdcc-5ec3-a4ab-865713584771/horizontal/thumbnails/large.jpg?semt=ais_hybrid&w=740&q=80",
+  },
+  {
+    id: 2,
+    title: "Anime Battle Sequence",
+    creator: "AnimeForge",
+    time: "0:58",
+    likes: "1.2k",
+    comments: "89",
+    tag: "Anime",
+    thumb: "https://i.ytimg.com/vi/hZE9eR8fFSk/maxresdefault.jpg",
+  },
+  {
+    id: 3,
+    title: "Photorealistic Portrait",
+    creator: "RealVision",
+    time: "0:34",
+    likes: "567",
+    comments: "23",
+    tag: "Realistic",
+    thumb: "https://p16-seeyou-useast8.capcutcdn-us.com/tos-useast8-i-2zwwjm3azk-tx2/c807df9a4fcf4d03ae093539523fec3d~tplv-2zwwjm3azk-compress:q75.image",
+  },
+  {
+    id: 4,
+    title: "Fantasy Dragon Flight",
+    creator: "MythMaker",
+    time: "2:15",
+    likes: "1.8k",
+    comments: "142",
+    tag: "Fantasy",
+    thumb: "https://leading-kindness-fb9fb04983.media.strapiapp.com/pseo_asset_cb6814ac_6f61_4cbe_978c_d36975689abf_72aa70a671.png",
+  },
+  {
+    id: 5,
+    title: "Abstract Light Waves",
+    creator: "AbstractLab",
+    time: "1:08",
+    likes: "321",
+    comments: "17",
+    tag: "Abstract",
+    thumb: "https://cms-assets.youmind.com/media/1793780766211_5fihoz_HWMgxtza0AA-zvq.jpg",
+  },
+  {
+    id: 6,
+    title: "Cyberpunk Rain Alley",
+    creator: "NeonDream",
+    time: "1:55",
+    likes: "976",
+    comments: "64",
+    tag: "Cyberpunk",
+    thumb: "https://videocdn.cdnpk.net/videos/1c58bcc8-809a-5d75-ae15-02cf4630658a/horizontal/thumbnails/large.jpg?semt=ais_hybrid&w=740&q=80",
+  },
+  {
+    id: 7,
+    title: "AI Music Visualizer",
+    creator: "SoundAI",
+    time: "3:22",
+    likes: "2.1k",
+    comments: "201",
+    tag: "Abstract",
+    thumb: "https://external-cdn.morphic.com/website-production/images/seo/anime-fight-scenes/scenes/rooftop-katana-duel.jpeg",
+  },
+  {
+    id: 8,
+    title: "Epic Landscape Timelapse",
+    creator: "WorldGen",
+    time: "1:17",
+    likes: "734",
+    comments: "45",
+    tag: "Realistic",
+    thumb: "https://cdn.leonardo.ai/users/9db46376-bafd-4edc-9627-bbf333abba79/generations/f67054aa-ade8-423c-bbfd-475ebaecfa38/segments/4:4:1/Lucid_Realism_ultra_realistic_cinematic_youtube_thumbnail_port_3.jpg",
+  },
+  {
+    id: 9,
+    title: "Mecha Showdown",
+    creator: "MechaAI",
+    time: "2:40",
+    likes: "1.4k",
+    comments: "98",
+    tag: "Anime",
+    thumb: "https://autoweeb.com/assets/blog_images/storytelling-and-worldbuilding-in-ai-anime-1.jpeg",
+  },
 ];
 
 export default function Home() {
@@ -89,9 +170,13 @@ export default function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {VIDEOS.map((video) => (
             <div key={video.id} className="glass rounded-xl overflow-hidden">
-              <div className="relative aspect-video bg-gradient-to-br from-blue/30 to-gold/20 cursor-pointer group">
+              <div
+                className="relative aspect-video bg-cover bg-center cursor-pointer group"
+                style={{ backgroundImage: `url(${video.thumb})` }}
+              >
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition" />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-14 h-14 rounded-full bg-black/40 backdrop-blur flex items-center justify-center group-hover:scale-105 transition">
+                  <div className="w-14 h-14 rounded-full bg-black/50 backdrop-blur flex items-center justify-center group-hover:scale-105 transition">
                     <Play className="w-7 h-7 text-white fill-white" />
                   </div>
                 </div>
