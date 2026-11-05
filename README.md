@@ -6,7 +6,16 @@ A social network for AI art, AI video, AI projects, and AI-hosted shows. Built w
 
 ## Status
 
-Foundation scaffold. Landing page with content-type filters, discovery options, and social share buttons.
+Foundation scaffold. Landing page shows the target UI direction: video-first social feed.
+
+## UI Direction
+
+- **Video-first**: Videos are the main focus. Large thumbnails with play buttons, duration badges, YouTube-style presentation.
+- **Facebook-style social interface**: Feed of cards with creator avatar, name, timestamp, caption, like / comment / share / save actions.
+- **Clean card structure** (similar to RentHub): Simple, readable cards. No clutter. Mobile-friendly.
+- Content-type filters: Art, Video, Show, Project.
+- Discovery: Newest, Trending, Following.
+- Optional style tags + freeform tags.
 
 ## Stack
 
@@ -27,7 +36,7 @@ Foundation scaffold. Landing page with content-type filters, discovery options, 
 
 - Profiles with avatar, banner, bio, social links
 - Art uploads (jpg, png, webp, gif) + video uploads (mp4, webm, 500MB max)
-- Global feed + For You ranked feed
+- Global feed + For You ranked feed (video-first cards)
 - Content-type filters: Art, Video, Show, Project
 - Discovery: Newest, Trending, Following
 - Optional style tags (Realistic, Anime, Cyberpunk, Fantasy, Abstract, Photorealistic) + freeform tags
@@ -47,7 +56,7 @@ Foundation scaffold. Landing page with content-type filters, discovery options, 
 
 - [ ] Connect Vercel project
 - [ ] Wire up upload pipeline + thumbnail generation
-- [ ] Build feed + show pages
+- [ ] Build the actual feed + show pages with video-first cards
 - [ ] Soft launch
 
 ---
