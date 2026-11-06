@@ -93,8 +93,10 @@ create table if not exists notifications (
 );
 
 -- Full-text search on posts
+create or replace function public.immutable_array_to_string(text[]) returns text
+  language sql immutable as $$ select array_to_string($1, ' ') $$;
 alter table posts add column if not exists search_vector tsvector
-  generated always as (to_tsvector('english', coalesce(caption, '') || ' ' || array_to_string(tags, ' '))) stored;
+  generated always as (to_tsvector('english', coalesce(caption, '') || ' ' || public.immutable_array_to_string(tags))) stored;
 
 create index if not exists posts_search_idx on posts using gin(search_vector);
 create index if not exists posts_created_idx on posts (created_at desc);
