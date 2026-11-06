@@ -1,7 +1,7 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "AIdea — AI Art, AI Video, AI Shows",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://aidea-six.vercel.app"),
   title: {
     default: "AIdea — Where AI Creation Is the Feature",
     template: "AIdea | %s",
@@ -10,7 +10,7 @@ export const metadata = {
   openGraph: {
     title: "AIdea — Where AI Creation Is the Feature",
     description: "Showcase AI art, AI video, and AI-hosted shows. No demonetization. No penalties. Built for creators.",
-    url: "https://aidea.app",
+    url: "/",
     siteName: "AIdea",
     images: [{ url: "/og.png", width: 1200, height: 630 }],
     locale: "en_US",
