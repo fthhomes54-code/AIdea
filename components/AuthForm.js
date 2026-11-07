@@ -45,7 +45,7 @@ export default function AuthForm({ mode }) {
     <div className="max-w-sm mx-auto px-4 py-12">
       <div className="glass rounded-xl p-6">
         <h1 className="text-2xl font-bold mb-1">{isSignup ? "Join AIdea" : "Sign in"}</h1>
-        <p className="text-sm text-muted mb-5">{isSignup ? "Free for AI video and AI art creators." : "Welcome back."}</p>
+        <p className="text-sm text-muted mb-5">{isSignup ? "A home for AI video and AI art creators." : "Welcome back."}</p>
         {GOOGLE_ON && (
           <>
             <button onClick={google} className="w-full bg-white text-black rounded-full py-2 text-sm font-medium mb-4">Continue with Google</button>
@@ -63,7 +63,7 @@ export default function AuthForm({ mode }) {
         {!isSignup && <p className="text-xs text-muted mt-3 text-center">Forgot your password? Leave it blank and we'll email you a sign-in link.</p>}
         {msg && <p className="text-sm mt-4 text-gold">{msg}</p>}
         <p className="text-xs text-muted mt-5 text-center">
-          {isSignup ? <>Have an account? <Link href="/login" className="text-blue">Sign in</Link></> : <>New here? <Link href="/signup" className="text-blue">Sign up free</Link></>}
+          {isSignup ? <>Have an account? <Link href="/login" className="text-blue">Sign in</Link></> : <>New here? <Link href="/signup" className="text-blue">Join AIdea</Link></>}
         </p>
       </div>
     </div>

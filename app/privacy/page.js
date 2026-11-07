@@ -6,7 +6,7 @@ export default function Privacy() {
       <div className="max-w-2xl px-4 sm:px-6 py-6 text-sm text-gray-300 space-y-3">
         <h1 className="text-xl font-bold text-white">Privacy Policy</h1>
         <p className="text-gray-500">Effective November 6, 2026</p>
-        <p>AIdea is a free membership platform for sharing AI videos and AI art. Nothing is sold, and we never sell your data.</p>
+        <p>AIdea is a membership platform for sharing AI videos and AI art. Nothing is sold, and we never sell your data.</p>
         <p>What we collect: your email address, your profile name and picture, and the posts, comments, likes and follows you make. If you sign in with Google, we receive only your basic profile and email address.</p>
         <p>How we use it: to run your account, show your posts and channel, keep the community safe (reports and spam limits), and send account emails such as sign-up confirmation.</p>
         <p>Storage: accounts and uploads are stored with our hosting providers (Supabase and Vercel).</p>
