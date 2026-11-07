@@ -127,11 +127,11 @@ function VideoCard({ video, onShare, openShare, onToggleShare, copied, onCopy })
         style={{ backgroundImage: `url(${video.thumb})` }}
       >
         <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition" />
-        <div className="absolute inset-0 flex items-center justify-center">
+        {video.mediaType !== "art" && <div className="absolute inset-0 flex items-center justify-center">
           <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/50 backdrop-blur flex items-center justify-center group-hover:scale-105 transition">
             <Play className="w-5 h-5 sm:w-6 sm:h-6 text-white fill-white" />
           </div>
-        </div>
+        </div>}
         <span className="absolute bottom-1.5 right-1.5 text-[10px] sm:text-xs bg-black/70 px-1.5 py-0.5 rounded">{video.time}</span>
         <span className="absolute top-1.5 left-1.5 text-[10px] sm:text-xs bg-blue/80 px-1.5 py-0.5 rounded-full">{video.tag}</span>
       </Link>

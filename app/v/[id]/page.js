@@ -2,11 +2,13 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import AppShell from "@/components/AppShell";
 import ShareBar from "@/components/ShareBar";
+import PostActions from "@/components/PostActions";
+import Comments from "@/components/Comments";
 import { createPublic } from "@/lib/supabase-server";
 import { publicUrl } from "@/lib/storage";
 import { POST_SELECT, fmtCount } from "@/lib/posts";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 async function getPost(id) {
   if (!/^[0-9a-f-]{36}$/i.test(id)) return null;
@@ -53,7 +55,9 @@ export default async function WatchPage({ params }) {
             <div className="text-xs text-muted">{fmtCount(p.likes_count)} likes · {new Date(p.created_at).toLocaleDateString()}</div>
           </div>
           {p.tags?.length > 0 && <div className="flex flex-wrap gap-1.5 mt-3">{p.tags.map((t) => <Link key={t} href={`/?q=${encodeURIComponent(t)}`} className="text-xs px-2.5 py-1 rounded-full bg-white/5 text-muted">#{t}</Link>)}</div>}
-          <div className="mt-4"><ShareBar title={p.title || "AI creation"} creator={by} /></div>
+          <div className="mt-4"><PostActions postId={p.id} initialLikes={p.likes_count} /></div>
+          <div className="mt-3"><ShareBar title={p.title || "AI creation"} creator={by} /></div>
+          <Comments postId={p.id} />
         </div>
         <aside className="space-y-3">
           <div className="text-sm font-semibold">More on AIdea</div>
