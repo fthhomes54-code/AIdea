@@ -1,3 +1,4 @@
+import Badges from "@/components/Badges";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import AppShell from "@/components/AppShell";
@@ -24,6 +25,7 @@ export default async function Channel({ params }) {
     sb.from("posts").select(POST_SELECT).eq("author_id", u.id).eq("status", "live").order("created_at", { ascending: false }).limit(60),
     sb.from("follows").select("*", { count: "exact", head: true }).eq("following_id", u.id),
   ]);
+  const { data: stats } = await sb.from("creator_stats").select("posts,likes,golden_hour,founding,points").eq("author_id", u.id).maybeSingle();
   const cards = (posts || []).map(toCard);
   return (
     <AppShell>
@@ -37,6 +39,7 @@ export default async function Channel({ params }) {
         <div className="flex-1 min-w-0 pb-1">
           <h1 className="text-xl font-bold">{u.display_name || u.username}</h1>
           <div className="text-xs text-muted">@{u.username} · {followers || 0} followers · {cards.length} posts</div>
+          <Badges stats={stats} />
         </div>
         <FollowButton userId={u.id} />
       </div>
