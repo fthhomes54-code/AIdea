@@ -32,7 +32,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-base text-gray-100 font-sans antialiased">{children}</body>
+      <body className="bg-base text-gray-100 font-sans antialiased">
+        {children}
+        <div className="flex justify-center py-6">
+          <a href="https://altern.ai/ai/aidea" target="_blank" rel="noopener"><img src="https://data.altern.ai/alternbadge.png" alt="Featured on Altern" width="200" height="43" /></a>
+        </div>
+      </body>
     </html>
   );
 }
