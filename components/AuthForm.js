@@ -60,6 +60,7 @@ export default function AuthForm({ mode }) {
         <button disabled={busy || !email} onClick={submit} className="w-full bg-blue hover:bg-blue-600 disabled:opacity-50 text-white rounded-full py-2 text-sm font-medium">
           {busy ? "…" : isSignup ? (password ? "Create account" : "Email me a link") : password ? "Sign in" : "Email me a link"}
         </button>
+        {!isSignup && <p className="text-xs text-muted mt-3 text-center">Forgot your password? Leave it blank and we'll email you a sign-in link.</p>}
         {msg && <p className="text-sm mt-4 text-gold">{msg}</p>}
         <p className="text-xs text-muted mt-5 text-center">
           {isSignup ? <>Have an account? <Link href="/login" className="text-blue">Sign in</Link></> : <>New here? <Link href="/signup" className="text-blue">Sign up free</Link></>}
