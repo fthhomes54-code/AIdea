@@ -48,7 +48,7 @@ export default function AppShell({ children }) {
             );
           })}
           <div className="mt-4 pt-4 border-t border-white/5 px-3 text-[11px] text-muted leading-relaxed">
-            <Link href="/rules" className="hover:text-white">Rules & copyright</Link><br /><Link href="/admin/reports" className="hover:text-white">Admin</Link><br />stylegeniusnews@gmail.com
+            <Link href="/rules" className="hover:text-white">Rules & copyright</Link><br /><Link href="/privacy" className="hover:text-white">Privacy</Link><br /><Link href="/terms" className="hover:text-white">Terms</Link><br /><Link href="/admin/reports" className="hover:text-white">Admin</Link><br />stylegeniusnews@gmail.com
           </div>
         </aside>
         <main className="flex-1 min-w-0">{children}</main>
