@@ -6,7 +6,7 @@ import { createPublic } from "@/lib/supabase-server";
 import { publicUrl } from "@/lib/storage";
 import { POST_SELECT, toCard } from "@/lib/posts";
 
-export const revalidate = 30;
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }) {
   const { username } = await params;
