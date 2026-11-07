@@ -1,0 +1,32 @@
+[
+  {
+    "file": "seg1-a.jpg",
+    "segment_index": 1,
+    "caption": "Billie Eilish at Icebox, November 2018 (archive photo).",
+    "credit": "Icebox — CC BY 3.0. Source: https://commons.wikimedia.org/wiki/File:Billie_Eilish_at_Icebox.png. License: https://creativecommons.org/licenses/by/3.0. Resized and JPEG converted."
+  },
+  {
+    "file": "seg2-a.jpg",
+    "segment_index": 2,
+    "caption": "Olivia Rodrigo performing at Glastonbury, 2025 (archive photo).",
+    "credit": "Raph_PH — CC BY 4.0. Source: https://commons.wikimedia.org/wiki/File:Olivia_Rodrigo_2.jpeg. License: https://creativecommons.org/licenses/by/4.0. Resized and JPEG converted."
+  },
+  {
+    "file": "seg3-a.jpg",
+    "segment_index": 3,
+    "caption": "Humanoid robot at an exhibition; contextual robotics image, not Vogue World.",
+    "credit": "Om Umekar — CC BY-SA 4.0. Source: https://commons.wikimedia.org/wiki/File:Humanoid_Robot_at_International_Exhibitions.jpg. License: https://creativecommons.org/licenses/by-sa/4.0. Resized and JPEG converted."
+  },
+  {
+    "file": "seg4-a.jpg",
+    "segment_index": 4,
+    "caption": "Bad Bunny in Los Angeles, October 2019 (archive photo).",
+    "credit": "Glenn Francis / PacificProDigital.com (Toglenn) — CC BY-SA 4.0. Source: https://commons.wikimedia.org/wiki/File:Bad_Bunny_2019_by_Glenn_Francis.jpg. License: https://creativecommons.org/licenses/by-sa/4.0. Resized and JPEG converted."
+  },
+  {
+    "file": "seg5-a.jpg",
+    "segment_index": 5,
+    "caption": "Television remote control; contextual viewing image.",
+    "credit": "Dmitry Makeev — CC BY-SA 4.0. Source: https://commons.wikimedia.org/wiki/File:Television_remote_control_-_black_01.jpg. License: https://creativecommons.org/licenses/by-sa/4.0. Resized and JPEG converted."
+  }
+]

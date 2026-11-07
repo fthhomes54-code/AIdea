@@ -42,7 +42,7 @@ export default async function Channel({ params }) {
       <div className="px-4 sm:px-6 py-5 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-4">
         {cards.map((c) => (
           <Link key={c.id} href={`/v/${c.id}`} className="glass rounded-xl overflow-hidden">
-            <div className="relative aspect-video bg-cover bg-center" style={{ backgroundImage: `url(${c.thumb})` }}>
+            <div className="relative aspect-video bg-contain bg-no-repeat bg-center bg-black" style={{ backgroundImage: `url(${c.thumb})` }}>
               {c.time && <span className="absolute bottom-1.5 right-1.5 text-[10px] bg-black/70 px-1.5 py-0.5 rounded">{c.time}</span>}
             </div>
             <div className="p-2 text-xs sm:text-sm truncate">{c.title}</div>

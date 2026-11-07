@@ -123,7 +123,7 @@ function VideoCard({ video, onShare, openShare, onToggleShare, copied, onCopy })
     <div className="glass rounded-xl overflow-hidden">
       <Link
         href={video.real ? `/v/${video.id}` : "/signup"}
-        className="block relative aspect-video bg-cover bg-center cursor-pointer group"
+        className="block relative aspect-video bg-contain bg-no-repeat bg-center bg-black cursor-pointer group"
         style={{ backgroundImage: `url(${video.thumb})` }}
       >
         <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition" />
