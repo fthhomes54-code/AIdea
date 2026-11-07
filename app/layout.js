@@ -6,10 +6,10 @@ export const metadata = {
     default: "AIdea — Where AI Creation Is the Feature",
     template: "AIdea | %s",
   },
-  description: "Showcase AI art, AI video, and AI-hosted shows. No demonetization. No penalties. Built for creators.",
+  description: "Showcase AI art, AI video, and AI-hosted shows. AI work isn't penalized for being AI. Built for creators.",
   openGraph: {
     title: "AIdea — Where AI Creation Is the Feature",
-    description: "Showcase AI art, AI video, and AI-hosted shows. No demonetization. No penalties. Built for creators.",
+    description: "Showcase AI art, AI video, and AI-hosted shows. AI work isn't penalized for being AI. Built for creators.",
     url: "/",
     siteName: "AIdea",
     images: [{ url: "/og.png", width: 1200, height: 630 }],
@@ -19,11 +19,11 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     title: "AIdea — Where AI Creation Is the Feature",
-    description: "Showcase AI art, AI video, and AI-hosted shows. No demonetization. No penalties. Built for creators.",
+    description: "Showcase AI art, AI video, and AI-hosted shows. AI work isn't penalized for being AI. Built for creators.",
     images: ["/og.png"],
   },
   ...(process.env.GOOGLE_SITE_VERIFICATION ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } } : {}),
-  keywords: ["AI art", "AI video", "AI creators", "AI art community", "no shadowban", "AI shows"],
+  keywords: ["AI art", "AI video", "AI creators", "AI art community", "AI shows"],
   icons: {
     icon: "/favicon.svg",
   },
