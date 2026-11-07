@@ -66,7 +66,7 @@ export default function UploadPage() {
         duration = d;
         if (blob) { thumbKey = `${user.id}/${id}-thumb.jpg`; await uploadFile(new File([blob], "thumb.jpg", { type: "image/jpeg" }), thumbKey); }
       }
-      const allTags = [...new Set([...tags, ...custom.split(",").map((t) => t.trim().toLowerCase()).filter(Boolean)])].slice(0, 10);
+      const allTags = [...new Set([...tags, ...custom.split(/[,\s]+/).map((t) => t.trim().replace(/^#+/, "").toLowerCase()).filter(Boolean)])].slice(0, 10);
       const { data, error } = await createClient().from("posts").insert({
         author_id: user.id, media_type: isVideo ? "video" : "art", title: title.trim().slice(0, 120),
         caption: title.trim().slice(0, 120), media_url: key, storage_key: key, thumb_key: thumbKey,
