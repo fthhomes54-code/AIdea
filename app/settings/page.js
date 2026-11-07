@@ -30,7 +30,7 @@ export default function Settings() {
     const key = `${p.id}/avatar-${Date.now()}.${(f.name.split(".").pop() || "jpg").toLowerCase()}`;
     try { await uploadFile(f, key); setP({ ...p, avatar_url: key }); setMsg("Photo uploaded — tap Save."); } catch (e) { setMsg(e.message); }
   };
-  const signOut = async () => { await createClient().auth.signOut(); router.push("/"); };
+  const signOut = async () => { await createClient().auth.signOut(); window.location.href = "/"; };
   const field = "w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue";
   return (
     <AppShell>
