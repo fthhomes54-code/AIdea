@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="86" viewBox="0 0 200 43" role="img" aria-label="Featured on AIdea">
+<title>Featured on AIdea</title>
+<rect x=".5" y=".5" width="199" height="42" rx="7" fill="#ffffff" stroke="#d7d7de"/>
+<g transform="translate(12 6) scale(.86)" fill="#f5c542"><rect x="11" y="6" width="11" height="11"/><rect x="2" y="24" width="11" height="11"/><rect x="20" y="24" width="11" height="11"/></g>
+<text x="49" y="16" fill="#555561" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="500" letter-spacing="1.2">FEATURED ON</text>
+<text x="48" y="34" fill="#111116" font-family="DejaVu Sans, sans-serif" font-size="21" font-weight="700" letter-spacing="-.6">Idea</text>
+</svg>
