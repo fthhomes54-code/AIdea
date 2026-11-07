@@ -18,9 +18,10 @@ import {
 
 const OUTBOUND_SHARE = [
   { name: "Facebook", color: "bg-blue-600", url: (u) => `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(u)}` },
-  { name: "Instagram", color: "bg-pink-600", url: () => `https://www.instagram.com/` },
-  { name: "TikTok", color: "bg-black border border-gray-700", url: () => `https://www.tiktok.com/` },
-  { name: "YouTube", color: "bg-red-600", url: () => `https://www.youtube.com/` },
+  { name: "Reddit", color: "bg-orange-600", url: (u, t) => `https://www.reddit.com/submit?url=${encodeURIComponent(u)}&title=${encodeURIComponent(t)}` },
+  { name: "Pinterest", color: "bg-red-700", url: (u, t) => `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(u)}&description=${encodeURIComponent(t)}` },
+  { name: "LinkedIn", color: "bg-sky-700", url: (u) => `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(u)}` },
+  { name: "Email", color: "bg-gray-600", url: (u, t) => `mailto:?subject=${encodeURIComponent(t)}&body=${encodeURIComponent(u)}` },
   { name: "X", color: "bg-black border border-gray-700", url: (u, t) => `https://twitter.com/intent/tweet?url=${encodeURIComponent(u)}&text=${encodeURIComponent(t)}` },
   { name: "WhatsApp", color: "bg-green-600", url: (u, t) => `https://wa.me/?text=${encodeURIComponent(t + " " + u)}` },
 ];
@@ -150,6 +151,7 @@ function VideoCard({ video, onShare, openShare, onToggleShare, copied, onCopy })
 
         <div className="flex items-center justify-between text-[10px] sm:text-xs text-muted">
           <div className="flex gap-2 sm:gap-3">
+            {video.views && <span>{video.views} views</span>}
             <span className="flex items-center gap-0.5"><Heart className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> {video.likes}</span>
             <span className="flex items-center gap-0.5"><MessageCircle className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> {video.comments}</span>
           </div>
@@ -187,7 +189,7 @@ function VideoCard({ video, onShare, openShare, onToggleShare, copied, onCopy })
 
 const FILTERS = [
   { label: "All", q: {} }, { label: "Video", q: { type: "video" } }, { label: "Art", q: { type: "art" } },
-  { label: "Newest", q: { sort: "new" } }, { label: "Trending", q: { sort: "trending" } }, { label: "Following", q: { view: "following" } },
+  { label: "For You", q: { view: "foryou" } }, { label: "Trending", q: { sort: "trending" } }, { label: "Newest", q: { sort: "new" } }, { label: "Subscriptions", q: { view: "following" } },
 ];
 
 export default function Home({ params = {} }) {
@@ -199,18 +201,19 @@ export default function Home({ params = {} }) {
   useEffect(() => {
     const sb = createClient();
     (async () => {
-      let q = sb.from("posts").select(POST_SELECT).eq("status", "live").limit(48);
+      const ranked = params.sort === "trending" || params.view === "foryou";
+      let q = (params.view === "foryou" ? sb.rpc("for_you") : params.sort === "trending" ? sb.rpc("hot_posts") : sb.from("posts")).select(POST_SELECT).eq("status", "live").limit(48);
       if (params.type) q = q.eq("media_type", params.type);
       if (params.q) q = q.textSearch("search_vector", params.q, { type: "websearch" });
       if (params.view === "following") {
         const { data: { user } } = await sb.auth.getUser();
-        if (!user) { setNote("Sign in to see creators you follow."); setPosts([]); return; }
+        if (!user) { setNote("Sign in to see channels you subscribe to."); setPosts([]); return; }
         const { data: f } = await sb.from("follows").select("following_id").eq("follower_id", user.id);
         const ids = (f || []).map((r) => r.following_id);
-        if (!ids.length) { setNote("Follow creators to fill this tab."); setPosts([]); return; }
+        if (!ids.length) { setNote("Subscribe to channels to fill this tab."); setPosts([]); return; }
         q = q.in("author_id", ids);
       }
-      q = params.sort === "trending" ? q.order("likes_count", { ascending: false }).order("created_at", { ascending: false }) : q.order("created_at", { ascending: false });
+      if (!ranked) q = q.order("created_at", { ascending: false });
       const { data, error } = await q;
       setPosts(error ? [] : (data || []).map(toCard));
     })();

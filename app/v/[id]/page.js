@@ -4,6 +4,8 @@ import AppShell from "@/components/AppShell";
 import ShareBar from "@/components/ShareBar";
 import PostActions from "@/components/PostActions";
 import Comments from "@/components/Comments";
+import ViewCounter from "@/components/ViewCounter";
+import CrossPost from "@/components/CrossPost";
 import EpisodeScript from "@/components/EpisodeScript";
 import { createPublic } from "@/lib/supabase-server";
 import { publicUrl } from "@/lib/storage";
@@ -53,11 +55,13 @@ export default async function WatchPage({ params }) {
               <div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue to-gold flex items-center justify-center text-xs font-bold">{(by || "AI").slice(0, 2).toUpperCase()}</div>
               <div><div className="text-sm font-medium">{by}</div><div className="text-xs text-muted">@{p.profiles?.username}</div></div>
             </Link>
-            <div className="text-xs text-muted">{fmtCount(p.likes_count)} likes · {new Date(p.created_at).toLocaleDateString()}</div>
+            <div className="text-xs text-muted">{fmtCount(p.views || 0)} views · {fmtCount(p.likes_count)} likes · {new Date(p.created_at).toLocaleDateString()}</div>
           </div>
           {p.tags?.length > 0 && <div className="flex flex-wrap gap-1.5 mt-3">{p.tags.map((t) => <Link key={t} href={`/?q=${encodeURIComponent(t)}`} className="text-xs px-2.5 py-1 rounded-full bg-white/5 text-muted">#{t}</Link>)}</div>}
           <div className="mt-4"><PostActions postId={p.id} initialLikes={p.likes_count} /></div>
           <div className="mt-3"><ShareBar title={p.title || "AI creation"} creator={by} /></div>
+          <ViewCounter postId={p.id} />
+          <CrossPost url={`https://aidea-six.vercel.app/v/${p.id}`} title={p.title || "AIdea post"} fileUrl={src} isVideo={p.media_type === "video"} />
           <EpisodeScript script={p.script} />
           <Comments postId={p.id} />
         </div>
