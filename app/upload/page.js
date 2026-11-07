@@ -6,10 +6,19 @@ import { createClient } from "@/lib/supabase";
 import { uploadFile, MAX_BYTES } from "@/lib/storage";
 import { TAGS } from "@/lib/supabase";
 
-const ACCEPT = "image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,video/quicktime";
+const ACCEPT = "image/*,video/*,.mov,.mp4,.m4v,.webm";
+const EXT_TYPE = { mp4: "video/mp4", m4v: "video/mp4", mov: "video/quicktime", qt: "video/quicktime", webm: "video/webm", "3gp": "video/mp4", jpg: "image/jpeg", jpeg: "image/jpeg", png: "image/png", webp: "image/webp", gif: "image/gif" };
+const OK_TYPES = ["image/jpeg","image/png","image/webp","image/gif","video/mp4","video/webm","video/quicktime"];
+function normalize(f) {
+  const ext = (f.name.split(".").pop() || "").toLowerCase();
+  let t = OK_TYPES.includes(f.type) ? f.type : (EXT_TYPE[ext] || (f.type.startsWith("video/") ? "video/mp4" : f.type));
+  return t === f.type ? f : new File([f], f.name, { type: t, lastModified: f.lastModified });
+}
 
 function grabFrame(file) {
   return new Promise((resolve) => {
+    const done = setTimeout(() => resolve({ blob: null, duration: null }), 8000);
+    const fin = (r) => { clearTimeout(done); resolve(r); };
     const v = document.createElement("video");
     v.preload = "metadata"; v.muted = true; v.playsInline = true;
     v.src = URL.createObjectURL(file);
@@ -19,9 +28,9 @@ function grabFrame(file) {
       const w = Math.min(1280, v.videoWidth || 1280);
       c.width = w; c.height = Math.round(w * ((v.videoHeight || 720) / (v.videoWidth || 1280)));
       c.getContext("2d").drawImage(v, 0, 0, c.width, c.height);
-      c.toBlob((b) => resolve({ blob: b, duration: Math.round(v.duration || 0) }), "image/jpeg", 0.85);
+      c.toBlob((b) => fin({ blob: b, duration: Math.round(v.duration || 0) }), "image/jpeg", 0.85);
     };
-    v.onerror = () => resolve({ blob: null, duration: null });
+    v.onerror = () => fin({ blob: null, duration: null });
   });
 }
 
@@ -44,8 +53,10 @@ export default function UploadPage() {
     });
   }, [router]);
 
-  const pick = (f) => {
-    if (!f) return;
+  const pick = (raw) => {
+    if (!raw) return;
+    const f = normalize(raw);
+    if (!OK_TYPES.includes(f.type)) { setStatus("That file type isn't supported. Try MP4, MOV, or WebM."); return; }
     if (f.size > MAX_BYTES) { setStatus(`That file is over ${Math.round(MAX_BYTES / 1048576)} MB.`); return; }
     setStatus(""); setFile(f); setPreview(URL.createObjectURL(f));
     if (!title) setTitle(f.name.replace(/\.[^.]+$/, "").replace(/[-_]/g, " ").slice(0, 80));
@@ -64,7 +75,7 @@ export default function UploadPage() {
       if (isVideo) {
         const { blob, duration: d } = await grabFrame(file);
         duration = d;
-        if (blob) { thumbKey = `${user.id}/${id}-thumb.jpg`; await uploadFile(new File([blob], "thumb.jpg", { type: "image/jpeg" }), thumbKey); }
+        if (blob) { try { const k = `${user.id}/${id}-thumb.jpg`; await uploadFile(new File([blob], "thumb.jpg", { type: "image/jpeg" }), k); thumbKey = k; } catch {} }
       }
       const allTags = [...new Set([...tags, ...custom.split(/[,\s]+/).map((t) => t.trim().replace(/^#+/, "").toLowerCase()).filter(Boolean)])].slice(0, 10);
       const { data, error } = await createClient().from("posts").insert({
