@@ -10,7 +10,7 @@ const NAV = [
   { href: "/", label: "Home", icon: Home },
   { href: "/?view=shorts", label: "Shorts", icon: Clapperboard },
   { href: "/?sort=trending", label: "Trending", icon: Flame },
-  { href: "/?view=following", label: "Following", icon: Users },
+  { href: "/?view=following", label: "Subscriptions", icon: Users },
   { href: "/profile", label: "Library", icon: Library },
   { href: "/upload", label: "Upload", icon: Upload },
   { href: "/settings", label: "Settings", icon: Settings },

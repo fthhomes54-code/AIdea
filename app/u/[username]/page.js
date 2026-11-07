@@ -38,7 +38,7 @@ export default async function Channel({ params }) {
         </div>
         <div className="flex-1 min-w-0 pb-1">
           <h1 className="text-xl font-bold">{u.display_name || u.username}</h1>
-          <div className="text-xs text-muted">@{u.username} · {followers || 0} followers · {cards.length} posts</div>
+          <div className="text-xs text-muted">@{u.username} · {followers || 0} {followers === 1 ? "subscriber" : "subscribers"} · {cards.length} posts</div>
           <Badges stats={stats} />
         </div>
         <FollowButton userId={u.id} />

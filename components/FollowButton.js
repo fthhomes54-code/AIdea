@@ -18,12 +18,12 @@ export default function FollowButton({ userId }) {
   }, [userId]);
   if (me === undefined) return null;
   if (me?.id === userId) return <Link href="/settings" className="px-4 py-1.5 rounded-full text-sm glass">Edit channel</Link>;
-  if (!me) return <Link href="/signup" className="px-4 py-1.5 rounded-full text-sm bg-white text-black font-medium">Follow</Link>;
+  if (!me) return <Link href="/signup" className="px-4 py-1.5 rounded-full text-sm bg-red-600 text-white font-medium">Subscribe</Link>;
   const toggle = async () => {
     const sb = createClient();
     if (following) await sb.from("follows").delete().eq("follower_id", me.id).eq("following_id", userId);
     else await sb.from("follows").insert({ follower_id: me.id, following_id: userId });
     setFollowing(!following);
   };
-  return <button onClick={toggle} className={`px-4 py-1.5 rounded-full text-sm font-medium ${following ? "glass" : "bg-white text-black"}`}>{following ? "Following" : "Follow"}</button>;
+  return <button onClick={toggle} className={`px-4 py-1.5 rounded-full text-sm font-medium ${following ? "glass" : "bg-red-600 text-white"}`}>{following ? "Subscribed" : "Subscribe"}</button>;
 }
