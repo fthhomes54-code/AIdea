@@ -1,6 +1,6 @@
 import AppShell from "@/components/AppShell";
 import articles from "@/lib/articles.json";
-export const metadata = { title: "Learn: AI shows and series", description: "Guides to watching, making and sharing AI shows, series and short films on AIdea." };
+export const metadata = { title: "Learn: AI shows and series", description: "Guides to watching, making and sharing AI shows, series and short films on AIdea.", alternates: { canonical: "/learn" }, openGraph: { title: "AIdea | Learn: AI shows and series", description: "Guides to watching, making and sharing AI shows, series and short films on AIdea.", url: "/learn", siteName: "AIdea", type: "website", images: [{ url: "/og.png" }] } };
 export default function Learn() {
   return (
     <AppShell>

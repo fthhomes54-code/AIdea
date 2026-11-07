@@ -1,5 +1,5 @@
 import AppShell from "@/components/AppShell";
-export const metadata = { title: "Rules & copyright" };
+export const metadata = { title: "Rules & copyright", description: "What you can post on AIdea and how copyright reports work.", alternates: { canonical: "/rules" }, openGraph: { title: "AIdea | Rules & copyright", description: "What you can post on AIdea and how copyright reports work.", url: "/rules", siteName: "AIdea", type: "website", images: [{ url: "/og.png" }] } };
 export default function Rules() {
   return (
     <AppShell>

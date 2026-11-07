@@ -6,7 +6,7 @@ export function generateStaticParams() { return articles.map((a) => ({ slug: a.s
 const find = (s) => articles.find((a) => a.slug === s);
 export async function generateMetadata({ params }) {
   const { slug } = await params; const a = find(slug); if (!a) return {};
-  return { title: a.title, description: a.meta, alternates: { canonical: `/learn/${a.slug}` }, openGraph: { title: a.title, description: a.meta, type: "article" } };
+  return { title: a.title, description: a.meta, alternates: { canonical: `/learn/${a.slug}` }, openGraph: { title: a.title, description: a.meta, type: "article", url: `/learn/${a.slug}`, siteName: "AIdea", images: [{ url: "/og.png" }] } };
 }
 export default async function Article({ params }) {
   const { slug } = await params; const a = find(slug); if (!a) notFound();

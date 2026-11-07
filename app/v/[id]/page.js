@@ -30,8 +30,8 @@ export async function generateMetadata({ params }) {
   const img = publicUrl(p.thumb_key || p.thumbnail_url || (p.media_type === "video" ? null : p.storage_key)) || "/og.png";
   const url = `/v/${p.id}`;
   const og = { title, description, url, siteName: "AIdea", type: p.media_type === "video" ? "video.other" : "article", images: [{ url: img }] };
-  if (p.media_type === "video") og.videos = [{ url: publicUrl(p.storage_key || p.media_url) }];
-  return { title, description, alternates: { canonical: url }, openGraph: og, twitter: { card: "summary_large_image", title, description, images: [img] } };
+  const robots = /smoke test|delete me/i.test(p.title || "") ? { index: false } : undefined;
+  return { title, description, robots, alternates: { canonical: url }, openGraph: og, twitter: { card: "summary_large_image", title, description, images: [img] } };
 }
 
 export default async function WatchPage({ params }) {

@@ -1,5 +1,5 @@
 import AppShell from "@/components/AppShell";
-export const metadata = { title: "Privacy Policy" };
+export const metadata = { title: "Privacy Policy", description: "How AIdea collects, uses and protects your information.", alternates: { canonical: "/privacy" }, openGraph: { title: "AIdea | Privacy Policy", description: "How AIdea collects, uses and protects your information.", url: "/privacy", siteName: "AIdea", type: "website", images: [{ url: "/og.png" }] } };
 export default function Privacy() {
   return (
     <AppShell>

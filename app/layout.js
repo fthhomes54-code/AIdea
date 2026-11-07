@@ -6,6 +6,7 @@ export const metadata = {
     default: "AIdea — Where AI Creation Is the Feature",
     template: "AIdea | %s",
   },
+  alternates: { canonical: "/" },
   description: "Showcase AI art, AI video, and AI-hosted shows. AI work isn't penalized for being AI. Built for creators.",
   openGraph: {
     title: "AIdea — Where AI Creation Is the Feature",

@@ -13,7 +13,10 @@ export async function generateMetadata({ params }) {
   const { username } = await params;
   const { data: u } = await createPublic().from("profiles").select("username,display_name,bio,avatar_url").eq("username", username).maybeSingle();
   if (!u) return { title: "Not found" };
-  return { title: u.display_name || u.username, description: u.bio || `AI creations by @${u.username} on AIdea`, openGraph: { title: `${u.display_name || u.username} on AIdea`, images: u.avatar_url ? [u.avatar_url] : ["/og.png"] } };
+  const url = `/u/${u.username}`;
+  const description = u.bio || `AI creations by @${u.username} on AIdea`;
+  const robots = /smoke|test\d*$/i.test(u.username) ? { index: false } : undefined;
+  return { title: u.display_name || u.username, description, robots, alternates: { canonical: url }, openGraph: { title: `${u.display_name || u.username} on AIdea`, description, url, type: "profile", siteName: "AIdea", images: u.avatar_url ? [u.avatar_url] : ["/og.png"] } };
 }
 
 export default async function Channel({ params }) {
