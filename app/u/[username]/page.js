@@ -27,7 +27,9 @@ export default async function Channel({ params }) {
   const cards = (posts || []).map(toCard);
   return (
     <AppShell>
-      <div className="h-28 sm:h-40 bg-gradient-to-r from-blue/40 to-gold/30 bg-cover bg-center" style={u.banner_url ? { backgroundImage: `url(${publicUrl(u.banner_url)})` } : undefined} />
+      {u.banner_url
+        ? <div className="bg-black flex justify-center"><img src={publicUrl(u.banner_url)} alt="" className="w-full max-w-[1200px] max-h-[460px] object-contain" /></div>
+        : <div className="h-28 sm:h-40 bg-gradient-to-r from-blue/40 to-gold/30" />}
       <div className="px-4 sm:px-6 -mt-8 flex flex-wrap items-end gap-4">
         <div className="w-20 h-20 rounded-full border-4 border-[#0a0a0f] bg-gradient-to-br from-blue to-gold bg-cover bg-center flex items-center justify-center text-xl font-bold" style={u.avatar_url ? { backgroundImage: `url(${publicUrl(u.avatar_url)})` } : undefined}>
           {!u.avatar_url && (u.display_name || u.username).slice(0, 2).toUpperCase()}
