@@ -1,5 +1,6 @@
 "use client";
 
+import ChallengeBanner from "@/components/ChallengeBanner";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import AppShell from "@/components/AppShell";
@@ -247,6 +248,7 @@ export default function Home({ params = {} }) {
         </div>
       </div>
       <div className="px-3 sm:px-4 py-4">
+        {!params.q && !params.view && <ChallengeBanner />}
         {params.q && <div className="text-sm text-muted mb-3">Results for "{params.q}"</div>}
         {note && <div className="text-sm text-muted mb-3">{note}</div>}
         {posts === null ? (
