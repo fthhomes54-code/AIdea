@@ -22,6 +22,8 @@ export const metadata = {
     description: "Showcase AI art, AI video, and AI-hosted shows. No demonetization. No penalties. Built for creators.",
     images: ["/og.png"],
   },
+  ...(process.env.GOOGLE_SITE_VERIFICATION ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } } : {}),
+  keywords: ["AI art", "AI video", "AI creators", "AI art community", "no shadowban", "AI shows"],
   icons: {
     icon: "/favicon.svg",
   },
