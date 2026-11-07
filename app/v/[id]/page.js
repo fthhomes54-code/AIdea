@@ -3,6 +3,7 @@ import Link from "next/link";
 import AppShell from "@/components/AppShell";
 import ShareBar from "@/components/ShareBar";
 import PostActions from "@/components/PostActions";
+import OwnerControls from "@/components/OwnerControls";
 import Comments from "@/components/Comments";
 import ViewCounter from "@/components/ViewCounter";
 import CrossPost from "@/components/CrossPost";
@@ -59,6 +60,7 @@ export default async function WatchPage({ params }) {
           </div>
           {p.tags?.length > 0 && <div className="flex flex-wrap gap-1.5 mt-3">{p.tags.map((t) => <Link key={t} href={`/?q=${encodeURIComponent(t)}`} className="text-xs px-2.5 py-1 rounded-full bg-white/5 text-muted">#{t}</Link>)}</div>}
           <div className="mt-4"><PostActions postId={p.id} initialLikes={p.likes_count} /></div>
+          <OwnerControls post={{ id: p.id, author_id: p.author_id, title: p.title, tags: p.tags, storage_key: p.storage_key, thumb_key: p.thumb_key }} />
           <div className="mt-3"><ShareBar title={p.title || "AI creation"} creator={by} /></div>
           <ViewCounter postId={p.id} />
           <CrossPost url={`https://aidea-six.vercel.app/v/${p.id}`} title={p.title || "AIdea post"} fileUrl={src} isVideo={p.media_type === "video"} />
