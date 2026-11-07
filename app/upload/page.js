@@ -59,7 +59,7 @@ export default function UploadPage() {
       const ext = (file.name.split(".").pop() || "bin").toLowerCase().replace(/[^a-z0-9]/g, "");
       const id = crypto.randomUUID();
       const key = `${user.id}/${id}.${ext}`;
-      await uploadFile(file, key, setProgress);
+      await uploadFile(file, key, (p) => { setProgress(p); setStatus(p < 1 ? `Uploading… ${Math.round(p * 100)}%` : "Finishing up…"); });
       let thumbKey = null, duration = null;
       if (isVideo) {
         const { blob, duration: d } = await grabFrame(file);
