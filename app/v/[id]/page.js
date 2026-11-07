@@ -4,6 +4,7 @@ import AppShell from "@/components/AppShell";
 import ShareBar from "@/components/ShareBar";
 import PostActions from "@/components/PostActions";
 import Comments from "@/components/Comments";
+import EpisodeScript from "@/components/EpisodeScript";
 import { createPublic } from "@/lib/supabase-server";
 import { publicUrl } from "@/lib/storage";
 import { POST_SELECT, fmtCount } from "@/lib/posts";
@@ -12,7 +13,7 @@ export const dynamic = "force-dynamic";
 
 async function getPost(id) {
   if (!/^[0-9a-f-]{36}$/i.test(id)) return null;
-  const { data } = await createPublic().from("posts").select(POST_SELECT).eq("id", id).maybeSingle();
+  const { data } = await createPublic().from("posts").select(POST_SELECT + ",script").eq("id", id).maybeSingle();
   return data;
 }
 
@@ -57,13 +58,14 @@ export default async function WatchPage({ params }) {
           {p.tags?.length > 0 && <div className="flex flex-wrap gap-1.5 mt-3">{p.tags.map((t) => <Link key={t} href={`/?q=${encodeURIComponent(t)}`} className="text-xs px-2.5 py-1 rounded-full bg-white/5 text-muted">#{t}</Link>)}</div>}
           <div className="mt-4"><PostActions postId={p.id} initialLikes={p.likes_count} /></div>
           <div className="mt-3"><ShareBar title={p.title || "AI creation"} creator={by} /></div>
+          <EpisodeScript script={p.script} />
           <Comments postId={p.id} />
         </div>
         <aside className="space-y-3">
           <div className="text-sm font-semibold">More on AIdea</div>
           {(more || []).map((m) => (
             <Link key={m.id} href={`/v/${m.id}`} className="flex gap-2 group">
-              <div className="w-40 aspect-video rounded-lg bg-cover bg-center bg-white/5 shrink-0" style={{ backgroundImage: `url(${publicUrl(m.thumb_key || m.thumbnail_url || (m.media_type === "video" ? null : m.storage_key)) || "/og.png"})` }} />
+              <div className="w-40 aspect-video rounded-lg bg-contain bg-no-repeat bg-center bg-black shrink-0" style={{ backgroundImage: `url(${publicUrl(m.thumb_key || m.thumbnail_url || (m.media_type === "video" ? null : m.storage_key)) || "/og.png"})` }} />
               <div className="text-sm group-hover:text-white text-gray-300 line-clamp-2">{m.title || "Untitled"}</div>
             </Link>
           ))}
