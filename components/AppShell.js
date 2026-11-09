@@ -1,10 +1,11 @@
 "use client";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Home, Clapperboard, Flame, Users, Library, Upload, Search, Settings, Menu } from "lucide-react";
 import AuthButton from "./AuthButton";
 import Logo from "./Logo";
+import { createClient } from "@/lib/supabase";
 
 const NAV = [
   { href: "/", label: "Home", icon: Home },
@@ -21,6 +22,10 @@ export default function AppShell({ children }) {
   const router = useRouter();
   const [q, setQ] = useState("");
   const [open, setOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  useEffect(() => {
+    createClient().rpc("is_admin").then(({ data }) => setIsAdmin(!!data)).catch(() => setIsAdmin(false));
+  }, []);
   const go = () => router.push(q.trim() ? `/?q=${encodeURIComponent(q.trim())}` : "/");
   return (
     <div className="min-h-screen bg-[#0a0a0f]">
@@ -48,7 +53,7 @@ export default function AppShell({ children }) {
             );
           })}
           <div className="mt-4 pt-4 border-t border-white/5 px-3 text-[11px] text-muted leading-relaxed">
-            <span className="block text-gold font-medium mb-1">A home where AI art belongs.</span><Link href="/learn" className="hover:text-white">Learn</Link><br /><Link href="/rules" className="hover:text-white">Rules & copyright</Link><br /><Link href="/privacy" className="hover:text-white">Privacy</Link><br /><Link href="/terms" className="hover:text-white">Terms</Link><br /><Link href="/admin/reports" className="hover:text-white">Admin</Link><br />stylegeniusnews@gmail.com
+            <span className="block text-gold font-medium mb-1">A home where AI art belongs.</span><Link href="/learn" className="hover:text-white">Learn</Link><br /><Link href="/rules" className="hover:text-white">Rules & copyright</Link><br /><Link href="/privacy" className="hover:text-white">Privacy</Link><br /><Link href="/terms" className="hover:text-white">Terms</Link>{isAdmin ? <><br /><Link href="/admin/reports" className="hover:text-white">Admin</Link></> : null}<br />stylegeniusnews@gmail.com
           </div>
         </aside>
         <main className="flex-1 min-w-0">{children}</main>
