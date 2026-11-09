@@ -16,7 +16,7 @@ export default function AuthButton() {
   if (!user)
     return (
       <Link href="/signup" className="bg-blue hover:bg-blue-600 text-white px-5 py-2 rounded-full text-sm font-medium">
-        Sign Up
+        Join AIdea
       </Link>
     );
   return (

@@ -1,6 +1,5 @@
 "use client";
 
-import ChallengeBanner from "@/components/ChallengeBanner";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import AppShell from "@/components/AppShell";
@@ -24,99 +23,6 @@ const OUTBOUND_SHARE = [
   { name: "Email", color: "bg-gray-600", url: (u, t) => `mailto:?subject=${encodeURIComponent(t)}&body=${encodeURIComponent(u)}` },
   { name: "X", color: "bg-black border border-gray-700", url: (u, t) => `https://twitter.com/intent/tweet?url=${encodeURIComponent(u)}&text=${encodeURIComponent(t)}` },
   { name: "WhatsApp", color: "bg-green-600", url: (u, t) => `https://wa.me/?text=${encodeURIComponent(t + " " + u)}` },
-];
-
-const VIDEOS = [
-  {
-    id: 1,
-    title: "Neon City Chase",
-    creator: "CyberAI",
-    time: "1:42",
-    likes: "842",
-    comments: "56",
-    tag: "Cyberpunk",
-    thumb: "https://videocdn.cdnpk.net/videos/21142582-bdcc-5ec3-a4ab-865713584771/horizontal/thumbnails/large.jpg?semt=ais_hybrid&w=740&q=80",
-  },
-  {
-    id: 2,
-    title: "Anime Battle Sequence",
-    creator: "AnimeForge",
-    time: "0:58",
-    likes: "1.2k",
-    comments: "89",
-    tag: "Anime",
-    thumb: "https://i.ytimg.com/vi/hZE9eR8fFSk/maxresdefault.jpg",
-  },
-  {
-    id: 3,
-    title: "Photorealistic Portrait",
-    creator: "RealVision",
-    time: "0:34",
-    likes: "567",
-    comments: "23",
-    tag: "Realistic",
-    thumb: "https://p16-seeyou-useast8.capcutcdn-us.com/tos-useast8-i-2zwwjm3azk-tx2/c807df9a4fcf4d03ae093539523fec3d~tplv-2zwwjm3azk-compress:q75.image",
-  },
-  {
-    id: 4,
-    title: "Fantasy Dragon Flight",
-    creator: "MythMaker",
-    time: "2:15",
-    likes: "1.8k",
-    comments: "142",
-    tag: "Fantasy",
-    thumb: "https://leading-kindness-fb9fb04983.media.strapiapp.com/pseo_asset_cb6814ac_6f61_4cbe_978c_d36975689abf_72aa70a671.png",
-  },
-  {
-    id: 5,
-    title: "Abstract Light Waves",
-    creator: "AbstractLab",
-    time: "1:08",
-    likes: "321",
-    comments: "17",
-    tag: "Abstract",
-    thumb: "https://cms-assets.youmind.com/media/1793780766211_5fihoz_HWMgxtza0AA-zvq.jpg",
-  },
-  {
-    id: 6,
-    title: "Cyberpunk Rain Alley",
-    creator: "NeonDream",
-    time: "1:55",
-    likes: "976",
-    comments: "64",
-    tag: "Cyberpunk",
-    thumb: "https://videocdn.cdnpk.net/videos/1c58bcc8-809a-5d75-ae15-02cf4630658a/horizontal/thumbnails/large.jpg?semt=ais_hybrid&w=740&q=80",
-  },
-  {
-    id: 7,
-    title: "AI Music Visualizer",
-    creator: "SoundAI",
-    time: "3:22",
-    likes: "2.1k",
-    comments: "201",
-    tag: "Abstract",
-    thumb: "https://external-cdn.morphic.com/website-production/images/seo/anime-fight-scenes/scenes/rooftop-katana-duel.jpeg",
-  },
-  {
-    id: 8,
-    title: "Epic Landscape Timelapse",
-    creator: "WorldGen",
-    time: "1:17",
-    likes: "734",
-    comments: "45",
-    tag: "Realistic",
-    thumb: "https://cdn.leonardo.ai/users/9db46376-bafd-4edc-9627-bbf333abba79/generations/f67054aa-ade8-423c-bbfd-475ebaecfa38/segments/4:4:1/Lucid_Realism_ultra_realistic_cinematic_youtube_thumbnail_port_3.jpg",
-  },
-  {
-    id: 9,
-    title: "Mecha Showdown",
-    creator: "MechaAI",
-    time: "2:40",
-    likes: "1.4k",
-    comments: "98",
-    tag: "Anime",
-    thumb: "https://autoweeb.com/assets/blog_images/storytelling-and-worldbuilding-in-ai-anime-1.jpeg",
-  },
 ];
 
 
@@ -220,11 +126,16 @@ export default function Home({ params = {} }) {
   }, [params.type, params.q, params.view, params.sort]);
 
   const filtered = params.type || params.q || params.view;
-  const real = posts || [];
-  const list = real.length ? real : filtered ? [] : VIDEOS;
-  const shorts = (real.filter((p) => p.mediaType === "video").length >= 3 ? real.filter((p) => p.mediaType === "video") : VIDEOS).slice(0, 8);
+  const list = posts || [];
+  const shorts = list.filter((p) => p.mediaType === "video").slice(0, 8);
   const siteUrl = () => (typeof window !== "undefined" ? window.location.origin : "https://aidea-six.vercel.app");
-  const urlFor = (v) => (v.real ? `${siteUrl()}/v/${v.id}` : siteUrl());
+  const urlFor = (v) => `${siteUrl()}/v/${v.id}`;
+  const emptyInvite = (
+    <div className="text-center py-16 px-4">
+      <p className="text-sm text-muted mb-4">Nothing here yet. Be one of the first to share AI art or AI video.</p>
+      <Link href="/signup" className="inline-block bg-blue hover:bg-blue-600 text-white px-5 py-2 rounded-full text-sm font-medium">Join AIdea</Link>
+    </div>
+  );
 
   const share = (platform, video) => {
     const text = `Watch "${video.title}" by ${video.creator} on AIdea`;
@@ -251,25 +162,28 @@ export default function Home({ params = {} }) {
         </div>
       </div>
       <div className="px-3 sm:px-4 py-4">
-        {!params.q && !params.view && <ChallengeBanner />}
         {params.q && <div className="text-sm text-muted mb-3">Results for "{params.q}"</div>}
         {note && <div className="text-sm text-muted mb-3">{note}</div>}
         {posts === null ? (
           <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-4">{Array.from({ length: 8 }).map((_, i) => <div key={i} className="glass rounded-xl aspect-video animate-pulse" />)}</div>
         ) : params.view === "shorts" ? (
-          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2">{shorts.map((v) => (
-            <Link key={v.id} href={v.real ? `/v/${v.id}` : "/signup"} className="relative aspect-[9/16] rounded-xl overflow-hidden bg-cover bg-center" style={{ backgroundImage: `url(${v.thumb})` }}>
-              <div className="absolute inset-0 bg-black/20" /><div className="absolute bottom-1.5 left-1.5 right-1.5 text-[10px] sm:text-xs font-medium truncate">{v.title}</div>
-            </Link>))}</div>
+          shorts.length ? (
+            <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2">{shorts.map((v) => (
+              <Link key={v.id} href={`/v/${v.id}`} className="relative aspect-[9/16] rounded-xl overflow-hidden bg-cover bg-center" style={{ backgroundImage: `url(${v.thumb})` }}>
+                <div className="absolute inset-0 bg-black/20" /><div className="absolute bottom-1.5 left-1.5 right-1.5 text-[10px] sm:text-xs font-medium truncate">{v.title}</div>
+              </Link>))}</div>
+          ) : emptyInvite
+        ) : !list.length ? (
+          emptyInvite
         ) : (
           <>
             <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-4 mb-6">{list.slice(0, 8).map(card)}</div>
-            {!filtered && (
+            {!filtered && shorts.length > 0 && (
               <section className="mb-6">
                 <h2 className="text-base sm:text-lg font-semibold mb-2"><span className="text-red-500">Shorts</span></h2>
                 <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2">
                   {shorts.map((video) => (
-                    <Link key={video.id} href={video.real ? `/v/${video.id}` : "/signup"} className="flex-shrink-0 w-28 sm:w-36">
+                    <Link key={video.id} href={`/v/${video.id}`} className="flex-shrink-0 w-28 sm:w-36">
                       <div className="relative aspect-[9/16] rounded-xl overflow-hidden bg-cover bg-center" style={{ backgroundImage: `url(${video.thumb})` }}>
                         <div className="absolute inset-0 bg-black/20" />
                         <div className="absolute bottom-1.5 left-1.5 right-1.5">
@@ -284,7 +198,6 @@ export default function Home({ params = {} }) {
               </section>
             )}
             <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-4">{list.slice(8).map(card)}</div>
-            {filtered && !list.length && !note && <div className="text-sm text-muted">Nothing here yet.</div>}
           </>
         )}
       </div>
